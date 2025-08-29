@@ -203,8 +203,7 @@ export default function DotPatternPage() {
           <h2 className="text-lg font-mono mt-5">
             I'm a Full Stack Blockchain Developer crafting cutting-edge dApps
             and DeFi solutions. <br />
-            From writing secure smart contracts to building intuitive Web3
-            interfaces,
+            Love building low-latency systems and cross-platform features.
             <br />
             I turn complex blockchain concepts into user-friendly experiences.
           </h2>
