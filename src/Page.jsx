@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Github, Linkedin, Mail, Copy, Check, X } from "lucide-react";
+import { Github, Linkedin, Mail, Copy, Check, X, ExternalLink } from "lucide-react";
 
 export default function DotPatternPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -7,6 +7,8 @@ export default function DotPatternPage() {
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
   const [expandedCard, setExpandedCard] = useState(null);
+  const [expandedProject, setExpandedProject] = useState(null);
+  const [activeSection, setActiveSection] = useState("Experience"); // "Experience" or "Projects"
 
   const email = "11jal.edu@gmail.com";
 
@@ -35,53 +37,35 @@ export default function DotPatternPage() {
       details:
         "Built scalable backend tools and contributed to open-source infrastructure projects.",
     },
+  ];
+
+  const projects = [
     {
       id: 1,
-      org: "OpenAI",
-      role: "AI Research Intern",
-      stack: ["Python", "PyTorch", "Transformers"],
+      name: "DeFi Yield Optimizer",
+      description: "Automated yield farming across multiple protocols",
+      stack: ["Solidity", "React", "Web3.js", "Node.js"],
       details:
-        "Worked on fine-tuning LLMs for specialized domains and improved inference efficiency.",
+        "Built a DeFi protocol that automatically moves user funds between different yield farming opportunities to maximize returns. Implemented smart contracts with security audits and created a responsive frontend with real-time analytics.",
+      link: "https://example.com/defi-yield",
     },
     {
       id: 2,
-      org: "Ethereum Foundation",
-      role: "Blockchain Developer",
-      stack: ["Solidity", "Hardhat", "React", "Ethers.js"],
+      name: "NFT Marketplace",
+      description: "Multi-chain NFT trading platform",
+      stack: ["Ethereum", "Polygon", "IPFS", "Next.js"],
       details:
-        "Developed smart contracts for DeFi protocols and optimized gas usage across transactions.",
+        "Developed a cross-chain NFT marketplace supporting Ethereum and Polygon. Implemented lazy minting, batch transactions, and royalty distribution features. Integrated with IPFS for decentralized storage.",
+      link: "https://example.com/nft-market",
     },
     {
       id: 3,
-      org: "Google Summer of Code",
-      role: "Contributor",
-      stack: ["Go", "Kubernetes", "Docker"],
+      name: "DAO Governance Tool",
+      description: "Voting and proposal system for decentralized organizations",
+      stack: ["Solidity", "Hardhat", "The Graph", "React"],
       details:
-        "Built scalable backend tools and contributed to open-source infrastructure projects.",
-    },
-    {
-      id: 1,
-      org: "OpenAI",
-      role: "AI Research Intern",
-      stack: ["Python", "PyTorch", "Transformers"],
-      details:
-        "Worked on fine-tuning LLMs for specialized domains and improved inference efficiency.",
-    },
-    {
-      id: 2,
-      org: "Ethereum Foundation",
-      role: "Blockchain Developer",
-      stack: ["Solidity", "Hardhat", "React", "Ethers.js"],
-      details:
-        "Developed smart contracts for DeFi protocols and optimized gas usage across transactions.",
-    },
-    {
-      id: 3,
-      org: "Google Summer of Code",
-      role: "Contributor",
-      stack: ["Go", "Kubernetes", "Docker"],
-      details:
-        "Built scalable backend tools and contributed to open-source infrastructure projects.",
+        "Created a comprehensive governance platform for DAOs featuring proposal creation, voting mechanisms, and treasury management. Integrated with The Graph for efficient blockchain data querying.",
+      link: "https://example.com/dao-tool",
     },
   ];
 
@@ -207,7 +191,7 @@ export default function DotPatternPage() {
           <h2 className="font-bold font-mono text-gray-500 opacity-80 mt-4 text-xl">
             21 | Full-Stack Engineer
           </h2>
-          <h2 className="text-sm font-mono mt-5">
+          <h2 className="text-lg font-mono mt-5">
             I'm a Full Stack Blockchain Developer crafting cutting-edge dApps
             and DeFi solutions. <br />
             From writing secure smart contracts to building intuitive Web3
@@ -217,46 +201,113 @@ export default function DotPatternPage() {
           </h2>
         </div>
 
+        {/* Section slider */}
+        <div className="flex mt-90 relative px-12">
+          {/* Slider navigation */}
+          <div className=" bg- ml-150 left-10 transform h-10 flex ">
+            <button
+              onClick={() => setActiveSection("Experience")}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                activeSection === "Experience" 
+                  ? 'bg-blue-500/30 text-white border border-blue-400' 
+                  : 'bg-gray-800/30 text-gray-400 hover:text-white'
+              }`}
+            >
+              Experience
+            </button>
+            <button
+              onClick={() => setActiveSection("Projects")}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                activeSection === "Projects" 
+                  ? 'bg-purple-500/30 text-white border border-purple-400' 
+                  : 'bg-gray-800/30 text-gray-400 hover:text-white'
+              }`}
+            >
+              Projects
+            </button>
+          </div>
 
-        
-
-        {/* Timeline with vertical progress bar */}
-        <div className="mt-72 flex relative px-12">
-          {/* Vertical progress bar */}
-          
-          <div className=""></div>
-          
-          {/* Experience cards stacked vertically */}
-
-          <div className="flex flex-col gap-12 ml-100 mt-25 w-full">
-            <h1 className="font-light text-lg ml-10 text-blue-400 w-75 px-6">Experience</h1>
-            {experiences.map((exp) => (
-              <div
-                key={exp.id}
-                onClick={() => setExpandedCard(exp)}
-                className="cursor-pointer relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
-              >
-                <h3 className="text-lg font-bold text-white">{exp.org}</h3>
-                <p className="text-sm text-gray-300">{exp.role}</p>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {exp.stack.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+          {/* Slider container */}
+          <div className=" -ml-90 rounded-xl ">
+            <div className="flex transition-transform duration-500 ease-in-out">
+              {/* Experience section - conditionally rendered */}
+              {activeSection === "Experience" && (
+                <div className="w-full flex-shrink-0">
+                  <div className="flex flex-col gap-12 mt-25 w-full">
+                    <h1 className="font-light text-lg ml-10 text-blue-400 w-75 px-6">Experience</h1>
+                    {experiences.map((exp) => (
+                      <div
+                        key={exp.id}
+                        onClick={() => setExpandedCard(exp)}
+                        className="cursor-pointer relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
+                      >
+                        <h3 className="text-lg font-bold text-white">{exp.org}</h3>
+                        <p className="text-sm text-gray-300">{exp.role}</p>
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {exp.stack.map((tech, i) => (
+                            <span
+                              key={i}
+                              className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-md"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                        {/* Connector dot */}
+                        <div className="absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-400 border-2 border-white rounded-full"></div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                {/* Connector dot */}
-                <div className="absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-400 border-2 border-white rounded-full"></div>
-              </div>
-            ))}
+              )}
+
+              {/* Projects section - conditionally rendered */}
+              {activeSection === "Projects" && (
+                <div className="w-full flex-shrink-0">
+                  <div className="flex flex-col gap-12 mt-25 w-full">
+                    <h1 className="font-light text-lg ml-10 text-purple-400 w-75 px-6">Projects</h1>
+                    {projects.map((project) => (
+                      <div
+                        key={project.id}
+                        onClick={() => setExpandedProject(project)}
+                        className="cursor-pointer relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
+                      >
+                        <div className="flex justify-between items-start">
+                          <h3 className="text-lg font-bold text-white">{project.name}</h3>
+                          <a 
+                            href={project.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-gray-400 hover:text-white"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                        <p className="text-sm text-gray-300 mt-1">{project.description}</p>
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {project.stack.map((tech, i) => (
+                            <span
+                              key={i}
+                              className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-md"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                        {/* Connector dot */}
+                        <div className="absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-purple-400 border-2 border-white rounded-full"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Expanded Card Modal */}
+      {/* Expanded Experience Modal */}
       {expandedCard && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70">
           <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-[600px] p-8 text-white">
@@ -280,6 +331,46 @@ export default function DotPatternPage() {
             </div>
             <p className="mt-4 text-sm leading-relaxed">
               {expandedCard.details}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Expanded Project Modal */}
+      {expandedProject && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70">
+          <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-[600px] p-8 text-white">
+            <button
+              onClick={() => setExpandedProject(null)}
+              className="absolute top-4 right-4 text-white hover:text-red-400"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="flex justify-between items-start">
+              <h3 className="text-2xl font-bold">{expandedProject.name}</h3>
+              <a 
+                href={expandedProject.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white flex items-center gap-1"
+              >
+                <span className="text-sm">Visit</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+            <p className="mt-2 text-gray-300">{expandedProject.description}</p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {expandedProject.stack.map((tech, i) => (
+                <span
+                  key={i}
+                  className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-md"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <p className="mt-4 text-sm leading-relaxed">
+              {expandedProject.details}
             </p>
           </div>
         </div>
