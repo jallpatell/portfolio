@@ -11,6 +11,7 @@ export default function DotPatternPage() {
   const [activeSection, setActiveSection] = useState("Experience"); // "Experience" or "Projects"
 
   const email = "11jal.edu@gmail.com";
+  const location = "Remote, IN";
 
   const experiences = [
     {
@@ -189,31 +190,6 @@ export default function DotPatternPage() {
                 <Github className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
               </a>
               <a
-                href="https://linkedin.com/in/jallpatell"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
-              </a>
-              <a
-                href="https://twitter.com/jallpatell"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <svg className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
-              <a
-                href="https://calendly.com/jallpatell"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <svg className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-              </a>
-              <a
                 href="mailto:11jal.edu@gmail.com"
                 onClick={(e) => {
                   e.preventDefault();
@@ -241,14 +217,14 @@ export default function DotPatternPage() {
         {/* Section slider */}
         <div className="flex mt-90 relative px-12 z-30">
           {/* Slider navigation */}
-          <div className="ml-150 left-10 transform h-10 flex items-center gap-1 pointer-events-auto">
+          <div className="ml-150 left-10 transform h-10 flex items-center gap-5 pointer-events-auto">
             <button
               onClick={() => setActiveSection("Experience")}
               aria-pressed={activeSection === "Experience"}
-              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-102 duration-500 delay-100 rounded-3xl p-0.2 mt-5 px-5 py-2  pointer-events-auto ${
+              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
                 activeSection === "Experience"
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white text-white border-white hover:bg-white'
+                  ? 'bg-gradient-to-r from-blue-400 to-blue-500 text-white border-blue-400 shadow-lg shadow-blue-500/25 scale-105'
+                  : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
               }`}
             >
               Experience
@@ -256,10 +232,10 @@ export default function DotPatternPage() {
             <button
               onClick={() => setActiveSection("Projects")}
               aria-pressed={activeSection === "Projects"}
-              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-102 duration-500 delay-100 rounded-3xl p-0.2 mt-5 px-5 py-2 pointer-events-auto ${
+              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
                 activeSection === "Projects"
-                  ? 'bg-white text-black border-black'
-                  : 'bg-white text-white border-white hover:bg-white'
+                  ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/25 scale-105'
+                  : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
               }`}
             >
               Projects
@@ -362,6 +338,56 @@ export default function DotPatternPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-20 px-12 pb-8">
+          <div className="flex flex-col items-center gap-6">
+            {/* Location */}
+            <div className="flex items-center gap-3 text-gray-300">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 6.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <span className="font-medium">{location}</span>
+            </div>
+            
+            {/* Social Icons */}
+            <div className="flex items-center gap-6">
+              <a
+                href="https://linkedin.com/in/jallpatell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-200"
+              >
+                <Linkedin className="w-7 h-7 text-gray-300 hover:text-white transition-colors" />
+              </a>
+              <a
+                href="https://twitter.com/jallpatell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-200"
+              >
+                <svg className="w-7 h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a
+                href="https://calendly.com/jallpatell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-200"
+              >
+                <svg className="w-7 h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </a>
+            </div>
+            
+            {/* Copyright */}
+            <div className="text-gray-400 text-sm">
+              Flexible across all regions & timezones.
             </div>
           </div>
         </div>
