@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Github, Linkedin, Mail, Copy, Check, X, ExternalLink } from "lucide-react";
+import { Github, Linkedin, Mail, Copy, Check, X, ExternalLink, Calendar } from "lucide-react";
 
 export default function DotPatternPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -67,6 +67,25 @@ export default function DotPatternPage() {
         "Created a comprehensive governance platform for DAOs featuring proposal creation, voting mechanisms, and treasury management. Integrated with The Graph for efficient blockchain data querying.",
       link: "https://example.com/dao-tool",
     },
+  ];
+
+  const skills = [
+    {
+      category: "Frontend",
+      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "JavaScript"]
+    },
+    {
+      category: "Backend",
+      technologies: ["Node.js", "Express", "Python", "Go", "PostgreSQL", "MongoDB"]
+    },
+    {
+      category: "Blockchain",
+      technologies: ["Solidity", "Ethereum", "Hardhat", "Web3.js", "IPFS", "The Graph"]
+    },
+    {
+      category: "DevOps",
+      technologies: ["Docker", "Kubernetes", "AWS", "CI/CD", "Git", "Linux"]
+    }
   ];
 
   // Track mouse
@@ -177,6 +196,24 @@ export default function DotPatternPage() {
                 <Linkedin className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
               </a>
               <a
+                href="https://twitter.com/jallpatell"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a
+                href="https://calendly.com/jallpatell"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </a>
+              <a
                 href="mailto:11jal.edu@gmail.com"
                 onClick={(e) => {
                   e.preventDefault();
@@ -202,25 +239,27 @@ export default function DotPatternPage() {
         </div>
 
         {/* Section slider */}
-        <div className="flex mt-90 relative px-12">
+        <div className="flex mt-90 relative px-12 z-30">
           {/* Slider navigation */}
-          <div className=" bg- ml-150 left-10 transform h-10 flex ">
+          <div className="ml-150 left-10 transform h-10 flex items-center gap-1 pointer-events-auto">
             <button
               onClick={() => setActiveSection("Experience")}
-              className={`px-4 py-2 rounded-lg transition-all ${
-                activeSection === "Experience" 
-                  ? 'bg-blue-500/30 text-white border border-blue-400' 
-                  : 'bg-gray-800/30 text-gray-400 hover:text-white'
+              aria-pressed={activeSection === "Experience"}
+              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-102 duration-500 delay-100 rounded-3xl p-0.2 mt-5 px-5 py-2  pointer-events-auto ${
+                activeSection === "Experience"
+                  ? 'bg-black text-white border-black'
+                  : 'bg-white text-white border-white hover:bg-white'
               }`}
             >
               Experience
             </button>
             <button
               onClick={() => setActiveSection("Projects")}
-              className={`px-4 py-2 rounded-lg transition-all ${
-                activeSection === "Projects" 
-                  ? 'bg-purple-500/30 text-white border border-purple-400' 
-                  : 'bg-gray-800/30 text-gray-400 hover:text-white'
+              aria-pressed={activeSection === "Projects"}
+              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-102 duration-500 delay-100 rounded-3xl p-0.2 mt-5 px-5 py-2 pointer-events-auto ${
+                activeSection === "Projects"
+                  ? 'bg-white text-black border-black'
+                  : 'bg-white text-white border-white hover:bg-white'
               }`}
             >
               Projects
@@ -228,13 +267,12 @@ export default function DotPatternPage() {
           </div>
 
           {/* Slider container */}
-          <div className=" -ml-90 rounded-xl ">
+          <div className=" -ml-80 rounded-xl ">
             <div className="flex transition-transform duration-500 ease-in-out">
               {/* Experience section - conditionally rendered */}
               {activeSection === "Experience" && (
                 <div className="w-full flex-shrink-0">
                   <div className="flex flex-col gap-12 mt-25 w-full">
-                    <h1 className="font-light text-lg ml-10 text-blue-400 w-75 px-6">Experience</h1>
                     {experiences.map((exp) => (
                       <div
                         key={exp.id}
@@ -265,7 +303,6 @@ export default function DotPatternPage() {
               {activeSection === "Projects" && (
                 <div className="w-full flex-shrink-0">
                   <div className="flex flex-col gap-12 mt-25 w-full">
-                    <h1 className="font-light text-lg ml-10 text-purple-400 w-75 px-6">Projects</h1>
                     {projects.map((project) => (
                       <div
                         key={project.id}
@@ -302,6 +339,29 @@ export default function DotPatternPage() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Skills Section */}
+        <div className="mt-20 px-12">
+          <div className="flex flex-col gap-8">
+            <div className="grid grid-cols-2 gap-8">
+              {skills.map((skillGroup, index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6">
+                  <h3 className="text-lg font-bold text-white mb-4">{skillGroup.category}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {skillGroup.technologies.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="bg-blue-500/20 text-blue-300 text-xs px-3 py-2 rounded-lg  border-blue-400/30"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
