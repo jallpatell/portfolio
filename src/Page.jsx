@@ -98,7 +98,7 @@ export default function DotPatternPage() {
         <div className="absolute top-30 left-50">
           {/* Name + Icons in same row */}
           <div className="flex items-center justify-between w-full max-w-full">
-            <h1 className="text-xl font-mono font-bold opacity-100">
+            <h1 className="text-xl text-blue-400 font-sans font-bold opacity-100">
               Jal Patel
             </h1>
             <div className="flex ml-180 gap-4">
@@ -107,14 +107,14 @@ export default function DotPatternPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="w-8 h-8 text-white opacity-80 hover:opacity-100 transition" />
+                <Github className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
               </a>
               <a
                 href="https://linkedin.com/in/jallpatell"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin className="w-8 h-8 text-white opacity-80 hover:opacity-100 transition" />
+                <Linkedin className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
               </a>
               <a
                 href="mailto:11jal.edu@gmail.com"
@@ -123,13 +123,13 @@ export default function DotPatternPage() {
                   setEmailDialogOpen(true);
                 }}
               >
-                <Mail className="w-8 h-8 text-white opacity-80 hover:opacity-100 transition" />
+                <Mail className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
               </a>
             </div>
           </div>
 
-          <h2 className="font-extralight font-mono opacity-80 mt-4 text-xl">
-            21 | Ahmedabad | Full-Stack Engineer
+          <h2 className="font-bold font-mono text-gray-500 opacity-80 mt-4 text-xl">
+            21 | Full-Stack Engineer
           </h2>
           <h2 className="text-sm font-mono mt-5">
             I'm a Full Stack Blockchain Developer crafting cutting-edge dApps
