@@ -16,64 +16,73 @@ export default function DotPatternPage() {
   const experiences = [
     {
       id: 1,
-      org: "OpenAI",
-      role: "AI Research Intern",
-      stack: ["Python", "PyTorch", "Transformers"],
+      org: "NaapBooks Limited",
+      role: "SDE Intern",
+      stack: ["React", "TypeScript", "Next"],
       details:
-        "Worked on fine-tuning LLMs for specialized domains and improved inference efficiency.",
+        "",
     },
     {
       id: 2,
-      org: "Ethereum Foundation",
-      role: "Blockchain Developer",
-      stack: ["Solidity", "Hardhat", "React", "Ethers.js"],
+      org: "Episodic Labs",
+      role: "Backend Engineer Intern",
+      stack: ["Typescript", "Node.js", "Hostinger", "Puppeteer"],
       details:
-        "Developed smart contracts for DeFi protocols and optimized gas usage across transactions.",
+        "Designed and developed modular Node.js-based microservices to enable scalable and maintainable backend architecture, improving backend scalability by 30%. Implemented CI/CD pipelines using GitHub Actions, automating build, test, and deployment workflows for faster release cycles, reducing deployment time by 50%. Integrated stock market data, open-source APIs, and financial news feeds using Node.js to enhance data-driven analysis capabilities, , enhancing application’s data-driven insights, by 35%"
     },
     {
       id: 3,
-      org: "Google Summer of Code",
-      role: "Contributor",
-      stack: ["Go", "Kubernetes", "Docker"],
+      org: "UpWork",
+      role: "Freelancer",
+      stack: ["Node.js", "Typescript", "Docker", "Next.js"],
       details:
-        "Built scalable backend tools and contributed to open-source infrastructure projects.",
+        "Built & deployed scalable systems and contributed to open-source infrastructure projects.",
     },
   ];
 
   const projects = [
     {
       id: 1,
-      name: "DeFi Yield Optimizer",
+      name: "MetaGas: Live Gas Tracker",
       description: "Automated yield farming across multiple protocols",
-      stack: ["Solidity", "React", "Web3.js", "Node.js"],
+      stack: ["TypeScript", "Redis", "WebSockets", "Next.js"],
       details:
         "Built a DeFi protocol that automatically moves user funds between different yield farming opportunities to maximize returns. Implemented smart contracts with security audits and created a responsive frontend with real-time analytics.",
-      link: "https://example.com/defi-yield",
+      link: "https://github.com/jallpatell/metagas",
+    },
+    {
+      id: 1,
+      name: "Pulse",
+      description: "Scrape down Zerodha Pulse",
+      stack: ["Typescript", "Puppeteer"],
+      details:
+        "An internal instrument typescript web-crawler that scrapes Indian stock market news from https://pulse.zerodha.com/ to analyse markets for a larger system.",
+      link: "https://github.com/jallpatell/pulse",
     },
     {
       id: 2,
-      name: "NFT Marketplace",
+      name: "CRYPTeX:  Decentralized Wallet & Portfolio Tracker",
       description: "Multi-chain NFT trading platform",
-      stack: ["Ethereum", "Polygon", "IPFS", "Next.js"],
+      stack: ["TypeScript", "React", "TailwindCSS", " @solana/web3.js"],
       details:
-        "Developed a cross-chain NFT marketplace supporting Ethereum and Polygon. Implemented lazy minting, batch transactions, and royalty distribution features. Integrated with IPFS for decentralized storage.",
-      link: "https://example.com/nft-market",
+        "Developed a non-custodial web-based wallet enabling secure Ethereum and Solana asset management. Engineered Web3-ready architecture with multi-chain support using ethers.js and @solana/web3.js. Implemented secure seed phrase generation, key derivation, and transaction signing workflows. Designed API-driven transaction history viewer with JSON+RPC capabilities.",
+      link: "https://github.com/jallpatell/CryptExe",
     },
     {
       id: 3,
-      name: "DAO Governance Tool",
-      description: "Voting and proposal system for decentralized organizations",
-      stack: ["Solidity", "Hardhat", "The Graph", "React"],
+      name: "AI Product Advisor: product-recco",
+      description: "AI-powered recommendation app",
+      stack: ["React Native", "AsyncStorage", "NativewindCSS", "Gemini API(Gemini 2.5 Pro )"],
       details:
-        "Created a comprehensive governance platform for DAOs featuring proposal creation, voting mechanisms, and treasury management. Integrated with The Graph for efficient blockchain data querying.",
-      link: "https://example.com/dao-tool",
+        "Built a cross-platform AI-powered recommendation app with backend integration, leveraging Gemini AI API for NLP-based personalized product suggestions. – Implemented state management, RESTful API integrations, and secure local storage persistence for a smooth real-time user experience. Architected backend-ready design for future expansion with scalable databases and real APIs.",
+      link: "https://snack.expo.dev/@jallpatell/product-recco",
     },
   ];
 
   const skills = [
     {
       category: "Full-Stack",
-      technologies: ["Node.js", "Typescript", "Rust", "Next.js", "TypeScript", "Redis", "Pub/Subs", "GraphQL", "PostgreSQL"]
+      technologies: ["Node.js", "Typescript", "Rust", "Next.js", "WebSockets", "Redis", "Pub/Subs", "GraphQL", "PostgreSQL"]
     },
     {
       category: "Blockchain",
@@ -198,12 +207,12 @@ export default function DotPatternPage() {
           </div>
 
           <h2 className="font-bold font-mono text-gray-500 opacity-80 mt-4 text-xl">
-            21 | Full-Stack Engineer
+            20 | Full-Stack Engineer | DeFi Platforms
           </h2>
           <h2 className="text-lg font-mono mt-5">
             I'm a Full Stack Blockchain Developer crafting cutting-edge dApps
             and DeFi solutions. <br />
-            Love building low-latency systems and cross-platform features.
+            Loves building low-latency systems, cross-platform APIs & features for Web3.
             <br />
             I turn complex blockchain concepts into user-friendly experiences.
           </h2>
@@ -216,7 +225,7 @@ export default function DotPatternPage() {
             <button
               onClick={() => setActiveSection("Experience")}
               aria-pressed={activeSection === "Experience"}
-              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
+              className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
                 activeSection === "Experience"
                   ? 'bg-gradient-to-r from-blue-400 to-blue-500 text-white border-blue-400 shadow-lg shadow-blue-500/25 scale-105'
                   : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
@@ -227,8 +236,8 @@ export default function DotPatternPage() {
             <button
               onClick={() => setActiveSection("Projects")}
               aria-pressed={activeSection === "Projects"}
-              className={`relative z-10 backdrop-blur-lg hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
-                activeSection === "Projects"
+              className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
+                activeSection === "Projects" 
                   ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/25 scale-105'
                   : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
               }`}
@@ -248,7 +257,7 @@ export default function DotPatternPage() {
                       <div
                         key={exp.id}
                         onClick={() => setExpandedCard(exp)}
-                        className="cursor-pointer relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
+                        className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
                       >
                         <h3 className="text-lg font-bold text-white">{exp.org}</h3>
                         <p className="text-sm text-gray-300">{exp.role}</p>
@@ -278,7 +287,7 @@ export default function DotPatternPage() {
                       <div
                         key={project.id}
                         onClick={() => setExpandedProject(project)}
-                        className="cursor-pointer relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
+                        className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
                       >
                         <div className="flex justify-between items-start">
                           <h3 className="text-lg font-bold text-white">{project.name}</h3>
@@ -382,7 +391,7 @@ export default function DotPatternPage() {
             
             {/* Copyright */}
             <div className="text-gray-400 text-sm">
-              Flexible across all regions & timezones.
+              Flexible across all Time-Zones & Regions.
             </div>
           </div>
         </div>
