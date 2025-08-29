@@ -1,13 +1,89 @@
 import { useState, useEffect, useMemo } from "react";
-import { Github, Linkedin, Mail, Copy, Check } from "lucide-react";
+import { Github, Linkedin, Mail, Copy, Check, X } from "lucide-react";
 
 export default function DotPatternPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [expandedCard, setExpandedCard] = useState(null);
 
   const email = "11jal.edu@gmail.com";
+
+  const experiences = [
+    {
+      id: 1,
+      org: "OpenAI",
+      role: "AI Research Intern",
+      stack: ["Python", "PyTorch", "Transformers"],
+      details:
+        "Worked on fine-tuning LLMs for specialized domains and improved inference efficiency.",
+    },
+    {
+      id: 2,
+      org: "Ethereum Foundation",
+      role: "Blockchain Developer",
+      stack: ["Solidity", "Hardhat", "React", "Ethers.js"],
+      details:
+        "Developed smart contracts for DeFi protocols and optimized gas usage across transactions.",
+    },
+    {
+      id: 3,
+      org: "Google Summer of Code",
+      role: "Contributor",
+      stack: ["Go", "Kubernetes", "Docker"],
+      details:
+        "Built scalable backend tools and contributed to open-source infrastructure projects.",
+    },
+    {
+      id: 1,
+      org: "OpenAI",
+      role: "AI Research Intern",
+      stack: ["Python", "PyTorch", "Transformers"],
+      details:
+        "Worked on fine-tuning LLMs for specialized domains and improved inference efficiency.",
+    },
+    {
+      id: 2,
+      org: "Ethereum Foundation",
+      role: "Blockchain Developer",
+      stack: ["Solidity", "Hardhat", "React", "Ethers.js"],
+      details:
+        "Developed smart contracts for DeFi protocols and optimized gas usage across transactions.",
+    },
+    {
+      id: 3,
+      org: "Google Summer of Code",
+      role: "Contributor",
+      stack: ["Go", "Kubernetes", "Docker"],
+      details:
+        "Built scalable backend tools and contributed to open-source infrastructure projects.",
+    },
+    {
+      id: 1,
+      org: "OpenAI",
+      role: "AI Research Intern",
+      stack: ["Python", "PyTorch", "Transformers"],
+      details:
+        "Worked on fine-tuning LLMs for specialized domains and improved inference efficiency.",
+    },
+    {
+      id: 2,
+      org: "Ethereum Foundation",
+      role: "Blockchain Developer",
+      stack: ["Solidity", "Hardhat", "React", "Ethers.js"],
+      details:
+        "Developed smart contracts for DeFi protocols and optimized gas usage across transactions.",
+    },
+    {
+      id: 3,
+      org: "Google Summer of Code",
+      role: "Contributor",
+      stack: ["Go", "Kubernetes", "Docker"],
+      details:
+        "Built scalable backend tools and contributed to open-source infrastructure projects.",
+    },
+  ];
 
   // Track mouse
   useEffect(() => {
@@ -94,7 +170,7 @@ export default function DotPatternPage() {
       />
 
       {/* Content area */}
-      <div className="relative z-20 h-screen">
+      <div className="relative z-20 h-screen -mt-10 overflow-y-auto">
         <div className="absolute top-30 left-50">
           {/* Name + Icons in same row */}
           <div className="flex items-center justify-between w-full max-w-full">
@@ -140,7 +216,74 @@ export default function DotPatternPage() {
             I turn complex blockchain concepts into user-friendly experiences.
           </h2>
         </div>
+
+
+        
+
+        {/* Timeline with vertical progress bar */}
+        <div className="mt-72 flex relative px-12">
+          {/* Vertical progress bar */}
+          
+          <div className=""></div>
+          
+          {/* Experience cards stacked vertically */}
+
+          <div className="flex flex-col gap-12 ml-100 mt-25 w-full">
+            <h1 className="font-light text-lg ml-10 text-blue-400 w-75 px-6">Experience</h1>
+            {experiences.map((exp) => (
+              <div
+                key={exp.id}
+                onClick={() => setExpandedCard(exp)}
+                className="cursor-pointer relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
+              >
+                <h3 className="text-lg font-bold text-white">{exp.org}</h3>
+                <p className="text-sm text-gray-300">{exp.role}</p>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {exp.stack.map((tech, i) => (
+                    <span
+                      key={i}
+                      className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-md"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                {/* Connector dot */}
+                <div className="absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-400 border-2 border-white rounded-full"></div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      {/* Expanded Card Modal */}
+      {expandedCard && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70">
+          <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-[600px] p-8 text-white">
+            <button
+              onClick={() => setExpandedCard(null)}
+              className="absolute top-4 right-4 text-white hover:text-red-400"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <h3 className="text-2xl font-bold">{expandedCard.org}</h3>
+            <p className="mt-2 text-gray-300">{expandedCard.role}</p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {expandedCard.stack.map((tech, i) => (
+                <span
+                  key={i}
+                  className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-md"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <p className="mt-4 text-sm leading-relaxed">
+              {expandedCard.details}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Email Dialog */}
       {emailDialogOpen && (
@@ -153,15 +296,7 @@ export default function DotPatternPage() {
                 onClick={copyEmail}
                 className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition"
               >
-                {emailCopied ? (
-                  <>
-                    <Check className="w-4 h-4" /> 
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4" /> 
-                  </>
-                )}
+                {emailCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
             <button
