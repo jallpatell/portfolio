@@ -72,20 +72,16 @@ export default function DotPatternPage() {
 
   const skills = [
     {
-      category: "Frontend",
-      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "JavaScript"]
-    },
-    {
-      category: "Backend",
-      technologies: ["Node.js", "Express", "Python", "Go", "PostgreSQL", "MongoDB"]
+      category: "Full-Stack",
+      technologies: ["Node.js", "Typescript", "Rust", "Next.js", "TypeScript", "Redis", "Pub/Subs", "GraphQL", "PostgreSQL"]
     },
     {
       category: "Blockchain",
-      technologies: ["Solidity", "Ethereum", "Hardhat", "Web3.js", "IPFS", "The Graph"]
+      technologies: ["Solana", "Ethereum Layer:1&2", "Web3.js", "Ethers.js", "The Graph"]
     },
     {
       category: "DevOps",
-      technologies: ["Docker", "Kubernetes", "AWS", "CI/CD", "Git", "Linux"]
+      technologies: ["Docker", "Kubernetes", "AWS", "CI/CD", "Git", "Linux", "NGINX", "Ansible", "Apache Kafka"]
     }
   ];
 
@@ -321,16 +317,16 @@ export default function DotPatternPage() {
 
         {/* Skills Section */}
         <div className="mt-20 px-12">
-          <div className="flex flex-col gap-8">
-            <div className="grid grid-cols-2 gap-8">
+          <div className="bg-black/10 backdrop-blur-md rounded-2xl shadow-lg p-8">
+            <div className="grid grid-cols-3 gap-8">
               {skills.map((skillGroup, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6">
-                  <h3 className="text-lg font-bold text-white mb-4">{skillGroup.category}</h3>
+                <div key={index} className="flex flex-col gap-3">
+                  <h3 className="text-lg font-bold text-white border-b font-mono border-white/20 pb-2">{skillGroup.category}</h3>
                   <div className="flex flex-wrap gap-2">
                     {skillGroup.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="bg-blue-500/20 text-blue-300 text-xs px-3 py-2 rounded-lg  border-blue-400/30"
+                        className="bg-blue-500/20 text-blue-300 font-mono text-xs px-3 py-2 rounded-lg border-blue-400/30"
                       >
                         {tech}
                       </span>
