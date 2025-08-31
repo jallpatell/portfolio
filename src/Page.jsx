@@ -48,7 +48,7 @@ export default function DotPatternPage() {
       stack: ["TypeScript", "Redis", "WebSockets", "Next.js"],
       details:
         "Built a DeFi protocol that automatically moves user funds between different yield farming opportunities to maximize returns. Implemented smart contracts with security audits and created a responsive frontend with real-time analytics.",
-      link: "https://github.com/jallpatell/metagas",
+      link: "metagas.vercel.app",
     },
     {
       id: 1,
@@ -66,7 +66,7 @@ export default function DotPatternPage() {
       stack: ["TypeScript", "React", "TailwindCSS", " @solana/web3.js"],
       details:
         "Developed a non-custodial web-based wallet enabling secure Ethereum and Solana asset management. Engineered Web3-ready architecture with multi-chain support using ethers.js and @solana/web3.js. Implemented secure seed phrase generation, key derivation, and transaction signing workflows. Designed API-driven transaction history viewer with JSON+RPC capabilities.",
-      link: "https://github.com/jallpatell/CryptExe",
+      link: "cryptexe.vercel.app",
     },
     {
       id: 3,
