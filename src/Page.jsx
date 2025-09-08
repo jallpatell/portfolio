@@ -81,16 +81,24 @@ export default function DotPatternPage() {
 
   const skills = [
     {
-      category: "Full-Stack",
-      technologies: ["Node.js", "Typescript", "Rust", "Next.js", "WebSockets", "Redis", "Pub/Subs", "GraphQL", "PostgreSQL"]
+      category: "",
+      technologies: ["Node.js", "Typescript", "Rust", "Golang", "Python", "C++"]
     },
     {
-      category: "Blockchain",
-      technologies: ["Solana", "Ethereum Layer:1&2", "Web3.js", "Ethers.js", "The Graph"]
+      category: "",
+      technologies: ["Express", "HTTPS", "Redis", "WebSocket", "GraphQL", "RabbitMQ", "Kafka", "MCP Servers"]
     },
     {
-      category: "DevOps",
+      category: "",
+      technologies: ["Next.js", "React", "React Native", "TailwindCSS", "Redux", "Zustand", "tRPC", "Recoil"]
+    },
+    {
+      category: "",
       technologies: ["Docker", "Kubernetes", "AWS", "CI/CD", "Git", "Linux", "NGINX", "Ansible", "Apache Kafka"]
+    },
+    {
+      category: "",
+      technologies: ["Prisma", "MongoDB", "MySQL", "PostGres", "Supabase", "SQLite"]
     }
   ];
 
@@ -142,7 +150,7 @@ export default function DotPatternPage() {
   }, [windowSize]);
 
   return (
-    <div className="fixed inset-0 bg-black cursor-none">
+    <div className="fixed inset-0 bg-black cursor-none md:cursor-auto">
       {/* Dot pattern background */}
       <div className="absolute inset-0">
         {dots.map((dot) => (
@@ -159,7 +167,7 @@ export default function DotPatternPage() {
 
       {/* Gradient hover effect */}
       <div
-        className="fixed w-32 h-32 pointer-events-none z-10 transition-opacity duration-300"
+        className="fixed w-24 h-24 md:w-32 md:h-32 pointer-events-none z-10 transition-opacity duration-300"
         style={{
           left: `${mousePos.x - 64}px`,
           top: `${mousePos.y - 64}px`,
@@ -171,7 +179,7 @@ export default function DotPatternPage() {
 
       {/* Custom cursor */}
       <div
-        className="fixed w-2 h-2 bg-white rounded-full pointer-events-none z-20 transition-all duration-100 ease-out"
+        className="fixed w-2 h-2 bg-white rounded-full pointer-events-none z-20 transition-all duration-100 ease-out hidden md:block"
         style={{
           left: `${mousePos.x - 4}px`,
           top: `${mousePos.y - 4}px`,
@@ -180,161 +188,162 @@ export default function DotPatternPage() {
 
       {/* Content area */}
       <div className="relative z-20 h-screen -mt-10 overflow-y-auto">
-        <div className="absolute top-30 left-50">
-          {/* Name + Icons in same row */}
-          <div className="flex items-center justify-between w-full max-w-full">
-            <h1 className="text-xl text-blue-400 font-sans font-bold opacity-100">
-              Jal Patel
-            </h1>
-            <div className="flex ml-180 gap-4">
-              <a
-                href="https://github.com/jallpatell"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
-              </a>
-              <a
-                href="mailto:11jal.edu@gmail.com"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setEmailDialogOpen(true);
-                }}
-              >
-                <Mail className="w-8 h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
-              </a>
+        <div className="w-full mt-10 md:mt-20">
+          <div className="max-w-5xl mx-auto px-6 md:px-0">
+            {/* Name + Icons in same row */}
+            <div className="flex items-center justify-between w-full max-w-full">
+              <h1 className="text-lg md:text-xl text-blue-500 font-sans font-bold opacity-100">
+                Jal Patel
+              </h1>
+              <div className="flex md:ml-0 gap-3 md:gap-4">
+                <a
+                  href="https://github.com/jallpatell"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="w-7 h-7 md:w-8 md:h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
+                </a>
+                <a
+                  href="mailto:11jal.edu@gmail.com"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setEmailDialogOpen(true);
+                  }}
+                >
+                  <Mail className="w-7 h-7 md:w-8 md:h-8 hover:scale-105 text-white opacity-80 hover:opacity-100 transition" />
+                </a>
+              </div>
             </div>
-          </div>
 
-          <h2 className="font-bold font-mono text-gray-500 opacity-80 mt-4 text-xl">
-            20 | Full-Stack Engineer | DeFi Platforms
-          </h2>
-          <h2 className="text-lg font-mono mt-5">
-            I'm a Full Stack Blockchain Developer crafting cutting-edge dApps
-            and DeFi solutions. <br />
-            Loves building low-latency systems, cross-platform APIs & features for Web3.
-            <br />
-            I turn complex blockchain concepts into user-friendly experiences.
-          </h2>
+            <h2 className="font-extrabold font-mono text-blue-300 opacity-80 mt-3 md:mt-4 text-lg md:text-2xl">
+              20 | Full-Stack Engineer | DeFi Solutions
+            </h2>
+            <h2 className="text-base md:text-lg font-mono mt-4 md:mt-5 max-w-[90vw] md:max-w-none">
+              I  wrok between designing and integrating scalable APIs to writing sleek and intuitive frontend. I build systems across Web2 & Web3. I love build
+              low-latency systems and turn complex ideas into intuitive experiences. 
+            </h2>
+          </div>
         </div>
 
         {/* Section slider */}
-        <div className="flex mt-90 relative px-12 z-30">
-          {/* Slider navigation */}
-          <div className="ml-150 left-10 transform h-10 flex items-center gap-5 pointer-events-auto">
-            <button
-              onClick={() => setActiveSection("Experience")}
-              aria-pressed={activeSection === "Experience"}
-              className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
-                activeSection === "Experience"
-                  ? 'bg-gradient-to-r from-blue-400 to-blue-500 text-white border-blue-400 shadow-lg shadow-blue-500/25 scale-105'
-                  : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
-              }`}
-            >
-              Experience
-            </button>
-            <button
-              onClick={() => setActiveSection("Projects")}
-              aria-pressed={activeSection === "Projects"}
-              className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-6 py-3 pointer-events-auto font-medium ${
-                activeSection === "Projects" 
-                  ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/25 scale-105'
-                  : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
-              }`}
-            >
-              Projects
-            </button>
-          </div>
+        <div className="flex mt-2 md:mt-9 relative px-6 md:px-12 z-30">
+          <div className="max-w-5xl mx-auto w-full">
+            {/* Slider navigation */}
+            <div className="w-full mt-5 flex items-center justify-center gap-3 md:gap-5 pointer-events-auto">
+              <button
+                onClick={() => setActiveSection("Experience")}
+                aria-pressed={activeSection === "Experience"}
+                className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-4 md:px-6 py-2.5 md:py-3 pointer-events-auto font-medium ${
+                  activeSection === "Experience"
+                    ? 'bg-gradient-to-r from-blue-400 to-blue-500 text-white border-blue-400 shadow-lg shadow-blue-500/25 scale-105'
+                    : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
+                }`}
+              >
+                Experience
+              </button>
+              <button
+                onClick={() => setActiveSection("Projects")}
+                aria-pressed={activeSection === "Projects"}
+                className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-4 md:px-6 py-2.5 md:py-3 pointer-events-auto font-medium ${
+                  activeSection === "Projects" 
+                    ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/25 scale-105'
+                    : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
+                }`}
+              >
+                Projects
+              </button>
+            </div>
 
-          {/* Slider container */}
-          <div className=" -ml-80 rounded-xl ">
-            <div className="flex transition-transform duration-500 ease-in-out">
-              {/* Experience section - conditionally rendered */}
-              {activeSection === "Experience" && (
-                <div className="w-full flex-shrink-0">
-                  <div className="flex flex-col gap-12 mt-25 w-full">
-                    {experiences.map((exp) => (
-                      <div
-                        key={exp.id}
-                        onClick={() => setExpandedCard(exp)}
-                        className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
-                      >
-                        <h3 className="text-lg font-bold text-white">{exp.org}</h3>
-                        <p className="text-sm text-gray-300">{exp.role}</p>
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {exp.stack.map((tech, i) => (
-                            <span
-                              key={i}
-                              className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-md"
-                            >
-                              {tech}
-                            </span>
-                          ))}
+            {/* Slider container */}
+            <div className="rounded-xl w-full max-w-5xl mx-auto">
+              <div className="flex flex-col md:flex-row transition-transform duration-500 ease-in-out">
+                {/* Experience section - conditionally rendered */}
+                {activeSection === "Experience" && (
+                  <div className="w-full flex-shrink-0">
+                    <div className="flex flex-col gap-6 md:gap-12 mt-10 md:mt-5 w-full items-center">
+                      {experiences.map((exp) => (
+                        <div
+                          key={exp.id}
+                          onClick={() => setExpandedCard(exp)}
+                          className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 md:p-6 w-full md:w-96 hover:scale-105 transition transform"
+                        >
+                          <h3 className="text-base md:text-lg font-bold text-white">{exp.org}</h3>
+                          <p className="text-xs md:text-sm text-gray-300">{exp.role}</p>
+                          <div className="flex flex-wrap gap-2 mt-5">
+                            {exp.stack.map((tech, i) => (
+                              <span
+                                key={i}
+                                className="bg-blue-500/20 text-blue-300 text-[10px] md:text-xs px-2 py-1 rounded-md"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                          {/* Connector dot */}
+                          <div className="hidden md:block absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-400 border-2 border-white rounded-full"></div>
                         </div>
-                        {/* Connector dot */}
-                        <div className="absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-400 border-2 border-white rounded-full"></div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Projects section - conditionally rendered */}
-              {activeSection === "Projects" && (
-                <div className="w-full flex-shrink-0">
-                  <div className="flex flex-col gap-12 mt-25 w-full">
-                    {projects.map((project) => (
-                      <div
-                        key={project.id}
-                        onClick={() => setExpandedProject(project)}
-                        className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-6 w-96 hover:scale-105 transition transform"
-                      >
-                        <div className="flex justify-between items-start">
-                          <h3 className="text-lg font-bold text-white">{project.name}</h3>
-                          <a 
-                            href={project.link} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-gray-400 hover:text-white"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        </div>
-                        <p className="text-sm text-gray-300 mt-1">{project.description}</p>
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {project.stack.map((tech, i) => (
-                            <span
-                              key={i}
-                              className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-md"
+                {/* Projects section - conditionally rendered */}
+                {activeSection === "Projects" && (
+                  <div className="w-full flex-shrink-0">
+                    <div className="flex flex-col gap-6 md:gap-12 md:mt-5 w-full items-center">
+                      {projects.map((project) => (
+                        <div
+                          key={project.id}
+                          onClick={() => setExpandedProject(project)}
+                          className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 md:p-6 w-full md:w-96 hover:scale-105 transition transform"
+                        >
+                          <div className="flex justify-between items-start">
+                            <h3 className="text-base md:text-lg font-bold text-white">{project.name}</h3>
+                            <a 
+                              href={project.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-gray-400 hover:text-white"
                             >
-                              {tech}
-                            </span>
-                          ))}
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          </div>
+                          <p className="text-xs md:text-sm text-gray-300 mt-1">{project.description}</p>
+                          <div className="flex flex-wrap gap-2 mt-3">
+                            {project.stack.map((tech, i) => (
+                              <span
+                                key={i}
+                                className="bg-purple-500/20 text-purple-300 text-[10px] md:text-xs px-2 py-1 rounded-md"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                          {/* Connector dot */}
+                          <div className="hidden md:block absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-purple-400 border-2 border-white rounded-full"></div>
                         </div>
-                        {/* Connector dot */}
-                        <div className="absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-purple-400 border-2 border-white rounded-full"></div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Skills Section */}
-        <div className="mt-20 px-12">
-          <div className="bg-black/10 backdrop-blur-md rounded-2xl shadow-lg p-8">
-            <div className="grid grid-cols-3 gap-8">
+        <div className="mt-14 md:mt-20 px-6 md:px-12">
+          <div className="bg-black/10 backdrop-blur-md rounded-2xl shadow-lg p-5 md:p-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 md:gap-3">
               {skills.map((skillGroup, index) => (
                 <div key={index} className="flex flex-col gap-3">
-                  <h3 className="text-lg font-bold text-white border-b font-mono border-white/20 pb-2">{skillGroup.category}</h3>
+                  <h3 className="text-base md:text-lg font-bold text-white border-b font-mono border-white/20 pb-2">{skillGroup.category}</h3>
                   <div className="flex flex-wrap gap-2">
                     {skillGroup.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="bg-blue-500/20 text-blue-300 font-mono text-xs px-3 py-2 rounded-lg border-blue-400/30"
+                        className="bg-blue-500/20 text-blue-300 font-mono text-[10px] md:text-xs px-2 md:px-3 py-1.5 md:py-2 rounded-lg border-blue-400/30"
                       >
                         {tech}
                       </span>
@@ -347,25 +356,25 @@ export default function DotPatternPage() {
         </div>
 
         {/* Footer */}
-        <div className="mt-20 px-12 pb-8">
-          <div className="flex flex-col items-center gap-6">
+        <div className="mt-14 md:mt-20 px-6 md:px-12 pb-8">
+          <div className="flex flex-col items-center gap-4 md:gap-6">
             {/* Location */}
-            <div className="flex items-center gap-3 text-gray-300">
+            <div className="flex items-center gap-2 md:gap-3 text-gray-300">
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 6.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
               </svg>
-              <span className="font-medium">{location}</span>
+              <span className="font-medium text-sm md:text-base">{location}</span>
             </div>
             
             {/* Social Icons */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-5 md:gap-6">
               <a
                 href="https://linkedin.com/in/jallpatell"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform duration-200"
               >
-                <Linkedin className="w-7 h-7 text-gray-300 hover:text-white transition-colors" />
+                <Linkedin className="w-6 h-6 md:w-7 md:h-7 text-gray-300 hover:text-white transition-colors" />
               </a>
               <a
                 href="https://twitter.com/jallpatell"
@@ -373,7 +382,7 @@ export default function DotPatternPage() {
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform duration-200"
               >
-                <svg className="w-7 h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-6 h-6 md:w-7 md:h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
               </a>
@@ -383,14 +392,13 @@ export default function DotPatternPage() {
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform duration-200"
               >
-                <svg className="w-7 h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-6 h-6 md:w-7 md:h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </a>
             </div>
-            
-            {/* Copyright */}
-            <div className="text-gray-400 text-sm">
+
+            <div className="text-gray-400 text-xs md:text-sm text-center">
               Flexible across all Time-Zones & Regions.
             </div>
           </div>
