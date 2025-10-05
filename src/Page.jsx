@@ -10,8 +10,8 @@ export default function DotPatternPage() {
   const [expandedProject, setExpandedProject] = useState(null);
   const [activeSection, setActiveSection] = useState("Experience"); // "Experience" or "Projects"
 
-  const email = "11jal.edu@gmail.com";
-  const location = "Remote, IN";
+  const email = "jallpatellco@gmail.com";
+  const location = "DXB / SGP";
 
   const experiences = [
     {
@@ -44,11 +44,11 @@ export default function DotPatternPage() {
     {
       id: 1,
       name: "MetaGas: Live Gas Tracker",
-      description: "Automated yield farming across multiple protocols",
+      description: "Track live gas prices for multiple chains (similar to etherscan).",
       stack: ["TypeScript", "Redis", "WebSockets", "Next.js"],
       details:
-        "Built a DeFi protocol that automatically moves user funds between different yield farming opportunities to maximize returns. Implemented smart contracts with security audits and created a responsive frontend with real-time analytics.",
-      link: "metagas.vercel.app",
+        "With Live charting, you see not only averages, but real extremes (highs/lows) within each 15-minute window, giving you deeper control over your transaction timing.",
+      link: "https://metagas.vercel.app/",
     },
     {
       id: 1,
@@ -62,11 +62,11 @@ export default function DotPatternPage() {
     {
       id: 2,
       name: "CRYPTeX:  Decentralized Wallet & Portfolio Tracker",
-      description: "Multi-chain NFT trading platform",
+      description: "Web3 wallet and portfolio tracker ( on devnet as of now)",
       stack: ["TypeScript", "React", "TailwindCSS", " @solana/web3.js"],
       details:
         "Developed a non-custodial web-based wallet enabling secure Ethereum and Solana asset management. Engineered Web3-ready architecture with multi-chain support using ethers.js and @solana/web3.js. Implemented secure seed phrase generation, key derivation, and transaction signing workflows. Designed API-driven transaction history viewer with JSON+RPC capabilities.",
-      link: "cryptexe.vercel.app",
+      link: "https://cryptexe.vercel.app/",
     },
     {
       id: 3,
@@ -82,25 +82,63 @@ export default function DotPatternPage() {
   const skills = [
     {
       category: "",
-      technologies: ["Node.js", "Typescript", "Rust", "Golang", "Python", "C++"]
+      technologies: [
+        "Node.js",
+        "Express",
+        "REST APIs",
+        "WebSockets",
+        "PubSubs",
+        "Content Delivery Network (CDN)",
+        "Redis (Cache)",
+        "RabbitMQ",
+        "Kafka"
+      ]
     },
     {
       category: "",
-      technologies: ["Express", "HTTPS", "Redis", "WebSocket", "GraphQL", "RabbitMQ", "Kafka", "MCP Servers"]
+      technologies: [
+        "React",
+        "Next.js",
+        "React Native",
+        "TailwindCSS",
+        "Redux",
+        "NativewindCSS",
+        "UI/UX principles"
+      ]
     },
     {
       category: "",
-      technologies: ["Next.js", "React", "React Native", "TailwindCSS", "Redux", "Zustand", "tRPC", "Recoil"]
+      technologies: [
+        "PostgreSQL",
+        "Redis",
+        "MongoDB",
+        "MySQL",
+        "Elasticsearch"
+      ]
     },
     {
       category: "",
-      technologies: ["Docker", "Kubernetes", "AWS", "CI/CD", "Git", "Linux", "NGINX", "Ansible", "Apache Kafka"]
+      technologies: [
+        "CI/CD Pipelines",
+        "Docker",
+        "AWS (EC2, Lambda)",
+        "NGINX",
+        "Git",
+        "GitHub Actions",
+        "Postman"
+      ]
     },
     {
       category: "",
-      technologies: ["Prisma", "MongoDB", "MySQL", "PostGres", "Supabase", "SQLite"]
-    }
+      technologies: [
+        "Data Structures & Algorithms",
+        "Object Oriented Programming",
+        "Database Management Systems"
+      ]
+    },
+    
   ];
+  
 
   // Track mouse
   useEffect(() => {
@@ -216,11 +254,12 @@ export default function DotPatternPage() {
             </div>
 
             <h2 className="font-extrabold font-mono text-blue-300 opacity-80 mt-3 md:mt-4 text-lg md:text-2xl">
-              20 | Full-Stack Engineer | DeFi Solutions
+              full-stack engg. | system design
             </h2>
             <h2 className="text-base md:text-lg font-mono mt-4 md:mt-5 max-w-[90vw] md:max-w-none">
-              I  wrok between designing and integrating scalable APIs to writing sleek and intuitive frontend. I build systems across Web2 & Web3. I love build
-              low-latency systems and turn complex ideas into intuitive experiences. 
+            primarily in TypeScript, React, and Node.js with hands-on experience in AI, Web3, and real-time systems.
+            Flexible to switch across any tech-stack & Programming languages if the Product excites me. Experienced in microservices, scalable backend
+            architectures, and DevOps workflows. Seeking remote Software Engineering opportunities to contribute to high-impact teams.
             </h2>
           </div>
         </div>
@@ -230,6 +269,17 @@ export default function DotPatternPage() {
           <div className="max-w-5xl mx-auto w-full">
             {/* Slider navigation */}
             <div className="w-full mt-5 flex items-center justify-center gap-3 md:gap-5 pointer-events-auto">
+            <button
+                onClick={() => setActiveSection("Projects")}
+                aria-pressed={activeSection === "Projects"}
+                className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-4 md:px-6 py-2.5 md:py-3 pointer-events-auto font-medium ${
+                  activeSection === "Projects" 
+                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white border-blue-400 shadow-lg shadow-blue-500/25 scale-105'
+                    : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
+                }`}
+              >
+                Projects
+              </button>
               <button
                 onClick={() => setActiveSection("Experience")}
                 aria-pressed={activeSection === "Experience"}
@@ -241,17 +291,7 @@ export default function DotPatternPage() {
               >
                 Experience
               </button>
-              <button
-                onClick={() => setActiveSection("Projects")}
-                aria-pressed={activeSection === "Projects"}
-                className={`relative z-10 backdrop-blur-lg font-mono hover:backdrop-blur-md border transition-all hover:scale-105 duration-300 rounded-xl px-4 md:px-6 py-2.5 md:py-3 pointer-events-auto font-medium ${
-                  activeSection === "Projects" 
-                    ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-purple-400 shadow-lg shadow-purple-500/25 scale-105'
-                    : 'bg-white/10 text-white border-white/30 hover:bg-white/20 hover:border-white/50'
-                }`}
-              >
-                Projects
-              </button>
+              
             </div>
 
             {/* Slider container */}
@@ -265,7 +305,7 @@ export default function DotPatternPage() {
                         <div
                           key={exp.id}
                           onClick={() => setExpandedCard(exp)}
-                          className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 md:p-6 w-full md:w-96 hover:scale-105 transition transform"
+                          className="cursor-pointer relative bg-gray-900/15 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 md:p-6 w-full md:w-96 hover:scale-105 transition transform"
                         >
                           <h3 className="text-base md:text-lg font-bold text-white">{exp.org}</h3>
                           <p className="text-xs md:text-sm text-gray-300">{exp.role}</p>
@@ -295,7 +335,7 @@ export default function DotPatternPage() {
                         <div
                           key={project.id}
                           onClick={() => setExpandedProject(project)}
-                          className="cursor-pointer relative bg-black backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 md:p-6 w-full md:w-96 hover:scale-105 transition transform"
+                          className="cursor-pointer relative bg-blue-900/15 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 md:p-6 w-full md:w-96 hover:scale-105 transition transform"
                         >
                           <div className="flex justify-between items-start">
                             <h3 className="text-base md:text-lg font-bold text-white">{project.name}</h3>
@@ -314,14 +354,14 @@ export default function DotPatternPage() {
                             {project.stack.map((tech, i) => (
                               <span
                                 key={i}
-                                className="bg-purple-500/20 text-purple-300 text-[10px] md:text-xs px-2 py-1 rounded-md"
+                                className="bg-blue-500/20 text-blue-300 text-[10px] md:text-xs px-2 py-1 rounded-md"
                               >
                                 {tech}
                               </span>
                             ))}
                           </div>
                           {/* Connector dot */}
-                          <div className="hidden md:block absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-purple-400 border-2 border-white rounded-full"></div>
+                          <div className="hidden md:block absolute -left-7 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-blue-400 border-2 border-white rounded-full"></div>
                         </div>
                       ))}
                     </div>
@@ -334,7 +374,7 @@ export default function DotPatternPage() {
 
         {/* Skills Section */}
         <div className="mt-14 md:mt-20 px-6 md:px-12">
-          <div className="bg-black/10 backdrop-blur-md rounded-2xl shadow-lg p-5 md:p-8">
+          <div className="bg-gray-900/10 backdrop-blur-md rounded-2xl shadow-lg p-5 md:p-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 md:gap-3">
               {skills.map((skillGroup, index) => (
                 <div key={index} className="flex flex-col gap-3">
@@ -376,7 +416,7 @@ export default function DotPatternPage() {
               >
                 <Linkedin className="w-6 h-6 md:w-7 md:h-7 text-gray-300 hover:text-white transition-colors" />
               </a>
-              <a
+              {/* <a
                 href="https://twitter.com/jallpatell"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -385,7 +425,7 @@ export default function DotPatternPage() {
                 <svg className="w-6 h-6 md:w-7 md:h-7 text-gray-300 hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
-              </a>
+              </a> */}
               <a
                 href="https://calendly.com/jallpatell"
                 target="_blank"
@@ -461,7 +501,7 @@ export default function DotPatternPage() {
               {expandedProject.stack.map((tech, i) => (
                 <span
                   key={i}
-                  className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-md"
+                  className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-md"
                 >
                   {tech}
                 </span>
