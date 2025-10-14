@@ -11,7 +11,7 @@ export default function DotPatternPage() {
   const [activeSection, setActiveSection] = useState("Experience"); // "Experience" or "Projects"
 
   const email = "jallpatellco@gmail.com";
-  const location = "DXB / SGP";
+  const location = "IN / DXB";
 
   const experiences = [
     {
