@@ -1,12 +1,78 @@
-# React + Vite
+# React App - Vercel Deployment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project has been converted from a Replit full-stack app to a React app optimized for Vercel deployment.
 
-Currently, two official plugins are available:
+## 🚀 Quick Deploy
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Deploy to Vercel (Recommended)
 
-## Expanding the ESLint configuration
+1. **Push to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Deploy to Vercel"
+   git push origin main
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Import to Vercel**:
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Import your GitHub repository
+   - Click Deploy (settings auto-detected)
+
+3. **Done!** Your app will be live at `https://your-project.vercel.app`
+
+### Deploy via CLI
+```bash
+npm i -g vercel
+vercel --prod
+```
+
+## 💻 Local Development
+
+```bash
+npm install
+npm run dev:client
+```
+
+Open [http://localhost:5173](http://localhost:5173)
+
+## 🧪 Test Production Build
+
+```bash
+npm run build:vercel
+npm run preview
+```
+
+## 📁 Project Structure
+
+```
+├── api/             # Vercel Serverless Functions
+│   └── contact.ts   # Contact form API
+├── client/          # React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   └── index.html
+├── dist/public/     # Build output
+├── vercel.json      # Vercel configuration
+└── vite.config.ts   # Vite build config
+```
+
+## ⚙️ Configuration
+
+- **Build Command**: `npm run build:vercel`
+- **Output Directory**: `dist/public`
+- **Dev Command**: `npm run dev:client`
+- **API Endpoint**: `POST /api/contact`
+
+## 📚 Documentation
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment guide and troubleshooting.
+
+## 🔧 Tech Stack
+
+- **Frontend**: React + TypeScript + Vite
+- **Styling**: Tailwind CSS + Framer Motion
+- **API**: Vercel Serverless Functions
+- **Deployment**: Vercel

@@ -1,0 +1,12 @@
+node_modules
+.git
+.replit
+.local
+server
+script
+shared
+attached_assets
+dist/index.cjs
+*.log
+.env*
+.DS_Store

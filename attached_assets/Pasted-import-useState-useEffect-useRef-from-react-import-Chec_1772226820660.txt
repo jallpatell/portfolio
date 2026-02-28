@@ -1,0 +1,723 @@
+import { useState, useEffect, useRef } from "react";
+import { Check, Calendar, ArrowUpRight, Mail, ChevronRight } from "lucide-react";
+
+/* ══════════════════════════════════════════════════════════════ DATA */
+const EMAIL = "jallpatellco@gmail.com";
+
+const EXPERIENCES = [
+  {
+    id: 1, org: "UpWork", role: "Freelancer", period: "Jan – Apr 2025",
+    stack: ["Rust", "Tokio", "Node.js", "TypeScript", "Docker"],
+    details: "Built production off-chain Rust application for DeFi systematic trading — real-time pricing engine, OMS, and risk monitoring. Tokio async WebSocket streaming achieving <5ms response times. JITO bundle integration for MEV protection.",
+  },
+  {
+    id: 2, org: "Episodic Labs", role: "Backend Intern", period: "May – Jul 2025",
+    stack: ["TypeScript", "Node.js", "Puppeteer", "GitHub Actions"],
+    details: "Modular Node.js microservices improving scalability by 30%. CI/CD via GitHub Actions, cutting deploy time by 50%. Integrated market data feeds, boosting data-driven analysis by 35%.",
+  },
+  {
+    id: 3, org: "NaapBooks Ltd", role: "SDE Intern", period: "Aug 2025 – Present", active: true,
+    stack: ["React", "TypeScript", "Next.js"],
+    details: "Building scalable frontend and backend systems with React and TypeScript in a fast-paced product environment.",
+  },
+];
+
+const PROJECTS = [
+  {
+    id: 1, name: "MetaGas", tagline: "Live Gas Tracker",
+    description: "Real-time gas prices across chains. Live charting with hi/lo per 15-min window for precision transaction timing.",
+    stack: ["TypeScript", "Redis", "WebSockets", "Next.js"],
+    link: "https://metagas.vercel.app/"
+  },
+  {
+    id: 2, name: "GreenProject", tagline: "Solana Arb Engine",
+    description: "Optimised Solana arbitrage bot into a real-time trading engine on Tokio async runtime with live opportunity detection.",
+    stack: ["Rust", "TypeScript", "Solana SDKs"],
+    link: "https://github.com/jallpatell/GreenProject"
+  },
+  {
+    id: 3, name: "Pulse", tagline: "Market Crawler",
+    description: "TypeScript web-crawler scraping Indian equity news from Zerodha Pulse as a data input layer for a larger analysis system.",
+    stack: ["TypeScript", "Puppeteer"],
+    link: "https://github.com/jallpatell/pulse"
+  },
+  {
+    id: 4, name: "CRYPTeX", tagline: "Decentralized Wallet",
+    description: "Non-custodial ETH & SOL wallet — seed-phrase generation, key derivation, transaction signing, and JSON-RPC history viewer.",
+    stack: ["TypeScript", "React", "@solana/web3.js"],
+    link: "https://cryptexne.vercel.app/"
+  },
+  {
+    id: 5, name: "product-recco", tagline: "AI Advisor",
+    description: "Cross-platform AI product advisor powered by Gemini NLP with state management, RESTful API integrations, and local persistence.",
+    stack: ["React Native", "Gemini API", "AsyncStorage"],
+    link: "https://snack.expo.dev/@jallpatell/product-recco"
+  },
+];
+
+const SKILLS = [
+  { cat: "Languages",  items: ["TypeScript", "Rust"] },
+  { cat: "Backend",    items: ["Node.js", "Express", "WebSockets", "FastAPI", "Kafka"] },
+  { cat: "Frontend",   items: ["Next.js", "React Native", "Tailwind"] },
+  { cat: "Databases",  items: ["PostgreSQL", "Redis", "MongoDB"] },
+  { cat: "DevOps",     items: ["Docker", "NGINX", "GitHub Actions"] },
+  { cat: "Web3",       items: ["Anchor", "Solana CLI", "web3.js", "rust-sdk"] },
+];
+
+/* ══════════════════════════════════════════════════════════════ ICONS */
+const GithubIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+  </svg>
+);
+const LinkedInIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+);
+
+/* ══════════════════════════════════════════════════════════════ WIDGET */
+function Widget({ children, style = {}, pad = "0", onClick }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => onClick && setHov(true)}
+      onMouseLeave={() => onClick && setHov(false)}
+      style={{
+        background: hov
+          ? "linear-gradient(145deg,rgba(44,44,50,0.98) 0%,rgba(32,32,38,0.99) 100%)"
+          : "linear-gradient(145deg,rgba(30,30,36,0.97) 0%,rgba(20,20,26,0.99) 100%)",
+        borderRadius: "20px",
+        border: "0.5px solid rgba(255,255,255,0.08)",
+        boxShadow: `
+          inset 0 1px 0 rgba(255,255,255,0.07),
+          inset 0 -1px 0 rgba(0,0,0,0.45),
+          0 4px 24px rgba(0,0,0,0.55),
+          0 1px 3px rgba(0,0,0,0.4)
+        `,
+        cursor: onClick ? "pointer" : "default",
+        transition: "background 0.22s ease",
+        position: "relative",
+        overflow: "hidden",
+        padding: pad,
+        ...style,
+      }}
+    >
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: "50%",
+        background: "linear-gradient(180deg,rgba(255,255,255,0.03) 0%,transparent 100%)",
+        borderRadius: "20px 20px 0 0",
+        pointerEvents: "none", zIndex: 0,
+      }} />
+      <div style={{ position: "relative", zIndex: 1, height: "100%" }}>{children}</div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ INTERSECTION */
+function useInView() {
+  const ref = useRef(null);
+  const [v, setV] = useState(false);
+  useEffect(() => {
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: 0.04 });
+    if (ref.current) o.observe(ref.current);
+    return () => o.disconnect();
+  }, []);
+  return [ref, v];
+}
+function FadeUp({ children, delay = 0 }) {
+  const [ref, v] = useInView();
+  return (
+    <div ref={ref} style={{
+      opacity: v ? 1 : 0,
+      transform: v ? "translateY(0)" : "translateY(16px)",
+      transition: `opacity 0.5s ease ${delay}ms, transform 0.5s cubic-bezier(0.4,0,0.2,1) ${delay}ms`,
+    }}>{children}</div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ FLOATING NOTIFICATION */
+function FloatingNotif({ mounted }) {
+  const [show, setShow] = useState(false);
+  const [gone, setGone] = useState(false);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const t1 = setTimeout(() => setShow(true), 1000);
+    const t2 = setTimeout(() => setShow(false), 6500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [mounted]);
+
+  const dismiss = () => { setShow(false); setTimeout(() => setGone(true), 520); };
+
+  if (gone) return null;
+
+  return (
+    <div style={{
+      position: "fixed",
+      top: "68px",
+      left: "50%",
+      transform: `translateX(-50%) translateY(${show ? "0px" : "-12px"})`,
+      opacity: show ? 1 : 0,
+      zIndex: 500,
+      transition: "opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.55s cubic-bezier(0.34,1.5,0.64,1)",
+      pointerEvents: show ? "all" : "none",
+      width: "min(420px, calc(100vw - 32px))",
+    }}>
+      <div style={{
+        background: "linear-gradient(145deg,rgba(32,32,38,0.97) 0%,rgba(22,22,28,0.99) 100%)",
+        borderRadius: "18px",
+        border: "0.5px solid rgba(255,255,255,0.1)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), 0 12px 48px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.5)",
+        padding: "14px 16px",
+        display: "flex", alignItems: "center", gap: "14px",
+        backdropFilter: "blur(40px)",
+        WebkitBackdropFilter: "blur(40px)",
+      }}>
+        <div style={{
+          width: "40px", height: "40px", borderRadius: "12px", flexShrink: 0,
+          background: "linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%)",
+          border: "0.5px solid rgba(255,255,255,0.12)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "19px",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 8px rgba(0,0,0,0.5)",
+        }}>👋</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            fontSize: "12.5px", fontWeight: 600,
+            color: "rgba(245,245,247,0.85)",
+            fontFamily: "SF Pro Text,-apple-system,sans-serif",
+            letterSpacing: "-0.005em", marginBottom: "2px",
+          }}>Open to Opportunities</div>
+          <div style={{
+            fontSize: "11.5px", color: "rgba(245,245,247,0.42)",
+            fontFamily: "SF Pro Text,-apple-system,sans-serif",
+            fontWeight: 300, overflow: "hidden",
+            textOverflow: "ellipsis", whiteSpace: "nowrap",
+          }}>Available · Flexible timezone · IN / DXB</div>
+        </div>
+        <button onClick={dismiss} style={{
+          width: "22px", height: "22px", borderRadius: "50%",
+          background: "rgba(255,255,255,0.07)",
+          border: "0.5px solid rgba(255,255,255,0.1)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer", color: "rgba(255,255,255,0.35)",
+          fontSize: "14px", lineHeight: 1, flexShrink: 0,
+          transition: "all 0.18s ease",
+        }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.color = "rgba(255,255,255,0.35)"; }}
+        >×</button>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ TOP NAV */
+function TopNav({ mounted, copied, onCopy }) {
+  const [tip, setTip] = useState(null);
+  const links = [
+    { key: "github",   label: "GitHub",   href: "https://github.com/jallpatell",      icon: <GithubIcon size={14} /> },
+    { key: "linkedin", label: "LinkedIn",  href: "https://linkedin.com/in/jallpatell", icon: <LinkedInIcon size={14} /> },
+    { key: "email",    label: "Email",     href: null,                                  icon: copied ? <Check size={14} /> : <Mail size={14} /> },
+    { key: "calendly", label: "Calendly",  href: "https://calendly.com/jallpatellco",  icon: <Calendar size={14} /> },
+  ];
+  const handle = async (link) => {
+    if (link.key === "email") { onCopy(); return; }
+    window.open(link.href, "_blank", "noopener,noreferrer");
+  };
+  return (
+    <div style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 300,
+      display: "flex", justifyContent: "center",
+      padding: "10px 24px",
+      opacity: mounted ? 1 : 0,
+      transform: mounted ? "translateY(0)" : "translateY(-100%)",
+      transition: "all 0.7s cubic-bezier(0.4,0,0.2,1) 0.1s",
+      pointerEvents: "none",
+    }}>
+      <div style={{
+        pointerEvents: "all",
+        display: "inline-flex", alignItems: "center", gap: "2px",
+        background: "linear-gradient(180deg,rgba(28,28,34,0.97) 0%,rgba(18,18,24,0.99) 100%)",
+        border: "0.5px solid rgba(255,255,255,0.1)",
+        borderRadius: "16px", padding: "5px 6px",
+        backdropFilter: "blur(40px) saturate(1.5)",
+        WebkitBackdropFilter: "blur(40px) saturate(1.5)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.4), 0 4px 24px rgba(0,0,0,0.7)",
+      }}>
+        {links.map(link => (
+          <div key={link.key} style={{ position: "relative" }}>
+            <button
+              onClick={() => handle(link)}
+              onMouseEnter={() => setTip(link.key)}
+              onMouseLeave={() => setTip(null)}
+              style={{
+                display: "flex", alignItems: "center", gap: "6px",
+                padding: "7px 14px", background: "transparent",
+                border: "none", borderRadius: "11px", cursor: "pointer",
+                fontSize: "13px",
+                fontFamily: "SF Pro Text,-apple-system,sans-serif",
+                fontWeight: 400, letterSpacing: "-0.005em",
+                color: link.key === "email" && copied ? "#30d158" : "rgba(245,245,247,0.6)",
+                transition: "all 0.18s ease", whiteSpace: "nowrap",
+              }}
+              onMouseEnter={e => { setTip(link.key); e.currentTarget.style.background = "rgba(255,255,255,0.09)"; e.currentTarget.style.color = "#f5f5f7"; }}
+              onMouseLeave={e => { setTip(null); e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = link.key === "email" && copied ? "#30d158" : "rgba(245,245,247,0.6)"; }}
+            >
+              <span style={{ opacity: 0.65, display: "flex", alignItems: "center" }}>{link.icon}</span>
+              {link.label}
+            </button>
+            {tip === link.key && (
+              <div style={{
+                position: "absolute", top: "calc(100% + 10px)", left: "50%",
+                transform: "translateX(-50%)",
+                background: "rgba(18,18,24,0.98)",
+                border: "0.5px solid rgba(255,255,255,0.12)",
+                borderRadius: "10px", padding: "5px 12px",
+                fontSize: "11px", color: "rgba(245,245,247,0.6)",
+                fontFamily: "SF Pro Text,-apple-system,sans-serif",
+                whiteSpace: "nowrap",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
+                pointerEvents: "none", zIndex: 400,
+                animation: "tipIn 0.14s ease",
+              }}>
+                {link.key === "email" && copied ? "Copied!" : link.key === "email" ? EMAIL : (link.href || "").replace("https://", "")}
+                <div style={{
+                  position: "absolute", top: "-4px", left: "50%",
+                  transform: "translateX(-50%) rotate(45deg)",
+                  width: "6px", height: "6px",
+                  background: "rgba(18,18,24,0.98)",
+                  borderTop: "0.5px solid rgba(255,255,255,0.12)",
+                  borderLeft: "0.5px solid rgba(255,255,255,0.12)",
+                }} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ EXP ROW */
+function ExpRow({ exp, isLast }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      onClick={() => setOpen(o => !o)}
+      style={{
+        padding: "18px 22px",
+        cursor: "pointer",
+        borderBottom: isLast ? "none" : "0.5px solid rgba(255,255,255,0.055)",
+        transition: "background 0.18s ease",
+      }}
+      onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.025)"}
+      onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <span style={{
+              fontFamily: "SF Pro Display,-apple-system,Helvetica Neue,sans-serif",
+              fontSize: "15px", fontWeight: 600,
+              color: "#f5f5f7", letterSpacing: "-0.018em",
+            }}>{exp.org}</span>
+            {exp.active && (
+              <span style={{
+                fontSize: "9px", fontWeight: 500, letterSpacing: "0.06em",
+                color: "#30d158", background: "rgba(48,209,88,0.1)",
+                border: "0.5px solid rgba(48,209,88,0.25)",
+                borderRadius: "20px", padding: "2px 7px",
+                fontFamily: "SF Pro Text,-apple-system,sans-serif",
+              }}>CURRENT</span>
+            )}
+          </div>
+          <div style={{ fontSize: "12px", color: "rgba(245,245,247,0.38)", marginTop: "2px", fontFamily: "SF Pro Text,-apple-system,sans-serif", letterSpacing: "-0.005em" }}>
+            {exp.role} · {exp.period}
+          </div>
+        </div>
+        <ChevronRight size={15} style={{
+          color: "rgba(255,255,255,0.2)",
+          transform: open ? "rotate(90deg)" : "rotate(0deg)",
+          transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1)",
+          flexShrink: 0, marginLeft: "12px",
+        }} />
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", marginTop: "10px" }}>
+        {exp.stack.map(t => (
+          <span key={t} style={{
+            fontSize: "10.5px", fontFamily: "SF Pro Text,-apple-system,sans-serif",
+            color: "rgba(245,245,247,0.38)", background: "rgba(255,255,255,0.055)",
+            border: "0.5px solid rgba(255,255,255,0.09)", borderRadius: "6px", padding: "2px 8px",
+          }}>{t}</span>
+        ))}
+      </div>
+      <div style={{
+        maxHeight: open ? "200px" : "0", overflow: "hidden",
+        opacity: open ? 1 : 0,
+        transition: "max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease 0.05s",
+      }}>
+        <p style={{
+          marginTop: "12px", fontSize: "13px", lineHeight: "1.72",
+          color: "rgba(245,245,247,0.48)",
+          fontFamily: "SF Pro Text,-apple-system,sans-serif",
+          fontWeight: 300, letterSpacing: "-0.003em",
+        }}>{exp.details}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ PROJECT TILE */
+function ProjTile({ project, isLast }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        padding: "18px 22px",
+        borderBottom: isLast ? "none" : "0.5px solid rgba(255,255,255,0.055)",
+        background: hov ? "rgba(255,255,255,0.02)" : "transparent",
+        transition: "background 0.18s ease",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{
+            fontFamily: "SF Pro Display,-apple-system,Helvetica Neue,sans-serif",
+            fontSize: "15px", fontWeight: 600, color: "#f5f5f7",
+            letterSpacing: "-0.018em", marginBottom: "2px",
+          }}>{project.name}</div>
+          <div style={{
+            fontSize: "10.5px", color: "rgba(245,245,247,0.3)",
+            fontFamily: "SF Pro Text,-apple-system,sans-serif",
+            letterSpacing: "0.05em", textTransform: "uppercase",
+          }}>{project.tagline}</div>
+        </div>
+        <a
+          href={project.link} target="_blank" rel="noopener noreferrer"
+          onClick={e => e.stopPropagation()}
+          style={{
+            width: "30px", height: "30px", borderRadius: "10px", flexShrink: 0, marginLeft: "12px",
+            background: hov ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.06)",
+            border: "0.5px solid rgba(255,255,255,0.1)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "rgba(255,255,255,0.5)",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07)",
+            transition: "all 0.18s ease",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = "#fff"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = hov ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
+        ><ArrowUpRight size={13} /></a>
+      </div>
+      <p style={{
+        fontSize: "13px", lineHeight: "1.65", color: "rgba(245,245,247,0.48)",
+        fontFamily: "SF Pro Text,-apple-system,sans-serif",
+        fontWeight: 300, letterSpacing: "-0.003em", marginBottom: "10px",
+      }}>{project.description}</p>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+        {project.stack.map(t => (
+          <span key={t} style={{
+            fontSize: "10.5px", fontFamily: "SF Pro Text,-apple-system,sans-serif",
+            color: "rgba(245,245,247,0.36)", background: "rgba(255,255,255,0.05)",
+            border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: "6px", padding: "2px 8px",
+          }}>{t}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════ MAIN */
+export default function Portfolio() {
+  const [mounted, setMounted] = useState(false);
+  const [tab, setTab] = useState("experience");
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => { const t = setTimeout(() => setMounted(true), 60); return () => clearTimeout(t); }, []);
+
+  const handleCopy = async () => {
+    try { await navigator.clipboard.writeText(EMAIL); setCopied(true); setTimeout(() => setCopied(false), 2200); } catch {}
+  };
+
+  return (
+    <div style={{
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",           /* ← page itself never scrolls */
+      background: "#0c0c10",
+      fontFamily: "SF Pro Text,-apple-system,BlinkMacSystemFont,Helvetica Neue,sans-serif",
+      display: "flex",
+      flexDirection: "column",
+    }}>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { background: #0c0c10; overflow: hidden; height: 100%; }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.09); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+        a { text-decoration: none; color: inherit; }
+
+        @keyframes breathe {
+          0%,100% { box-shadow: 0 0 0 2px rgba(48,209,88,0.2), 0 0 8px rgba(48,209,88,0.5); }
+          50%      { box-shadow: 0 0 0 3px rgba(48,209,88,0.08), 0 0 3px rgba(48,209,88,0.18); }
+        }
+        @keyframes tipIn {
+          from { opacity:0; transform:translateX(-50%) translateY(-5px); }
+          to   { opacity:1; transform:translateX(-50%) translateY(0); }
+        }
+        @keyframes shimmer {
+          0%   { background-position:-200% center; }
+          100% { background-position:200% center; }
+        }
+        @keyframes tabSlide {
+          from { opacity:0; transform:translateY(6px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes mountIn {
+          from { opacity:0; transform:translateY(20px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+      `}</style>
+
+      {/* depth layers */}
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+        background: "radial-gradient(ellipse 55% 35% at 18% 12%,rgba(255,255,255,0.015) 0%,transparent 60%), radial-gradient(ellipse 35% 55% at 82% 88%,rgba(255,255,255,0.01) 0%,transparent 60%)",
+      }} />
+
+      <TopNav mounted={mounted} copied={copied} onCopy={handleCopy} />
+      <FloatingNotif mounted={mounted} />
+
+      {/* ── MAIN LAYOUT ── fills remaining height below nav */}
+      <div style={{
+        flex: 1,
+        marginTop: "52px",            /* nav height */
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "stretch",
+        overflow: "hidden",
+        padding: "20px clamp(16px, 3vw, 40px) 20px",
+        gap: "clamp(12px, 1.5vw, 18px)",
+        minWidth: 0,
+        position: "relative", zIndex: 1,
+      }}>
+
+        {/* ═══ LEFT: identity + skills — FIXED HEIGHT, NO SCROLL ══ */}
+        <div style={{
+          width: "clamp(280px, 32%, 420px)",
+          flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+          gap: "clamp(10px, 1.2vw, 14px)",
+          overflow: "hidden",         /* never scrolls */
+          height: "100%",
+        }}>
+
+          {/* Identity widget */}
+          <div style={{
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.7s ease 80ms, transform 0.7s cubic-bezier(0.4,0,0.2,1) 80ms",
+            flexShrink: 0,
+          }}>
+            <Widget pad="clamp(20px,2.5vw,30px) clamp(18px,2.2vw,28px)">
+              <div style={{ display: "flex", alignItems: "center", gap: "7px", marginBottom: "18px" }}>
+                <div style={{
+                  width: "7px", height: "7px", borderRadius: "50%", background: "#30d158",
+                  boxShadow: "0 0 0 2px rgba(48,209,88,0.18), 0 0 8px rgba(48,209,88,0.5)",
+                  animation: "breathe 2.5s ease infinite",
+                }} />
+                <span style={{
+                  fontSize: "11px", fontWeight: 500, color: "rgba(48,209,88,0.72)",
+                  fontFamily: "SF Pro Text,-apple-system,sans-serif", letterSpacing: "0.04em",
+                }}>Available for Work</span>
+              </div>
+
+              <h1 style={{
+                fontFamily: "SF Pro Display,-apple-system,BlinkMacSystemFont,Helvetica Neue,sans-serif",
+                fontSize: "clamp(28px,3.2vw,44px)",
+                fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.02,
+                background: "linear-gradient(110deg,#f5f5f7 0%,rgba(245,245,247,0.55) 55%,#f5f5f7 100%)",
+                backgroundSize: "200% auto",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                animation: "shimmer 8s linear infinite", marginBottom: "5px",
+              }}>Jal Patel</h1>
+
+              <p style={{
+                fontSize: "clamp(13px,1.4vw,15px)",
+                fontFamily: "SF Pro Display,-apple-system,Helvetica Neue,sans-serif",
+                fontWeight: 400, color: "rgba(245,245,247,0.38)", letterSpacing: "-0.01em", marginBottom: "18px",
+              }}>Full-Stack Engineer</p>
+
+              <div style={{ width: "32px", height: "0.5px", background: "rgba(255,255,255,0.1)", marginBottom: "16px" }} />
+
+              <p style={{
+                fontSize: "clamp(12px,1.2vw,13.5px)", lineHeight: "1.78",
+                color: "rgba(245,245,247,0.48)",
+                fontFamily: "SF Pro Text,-apple-system,sans-serif",
+                fontWeight: 300, letterSpacing: "-0.005em",
+              }}>
+                Scalable Node.js &amp; Rust APIs, real-time systems, and production-grade DeFi infrastructure. Proficient in transaction optimization, compute unit management, and end-to-end performance engineering.
+              </p>
+            </Widget>
+          </div>
+
+          {/* Skills widget — fills remaining height */}
+          <div style={{
+            flex: 1,
+            minHeight: 0,
+            opacity: mounted ? 1 : 0,
+            transition: "opacity 0.7s ease 200ms",
+          }}>
+            <Widget style={{ height: "100%" }} pad="clamp(18px,2vw,24px) clamp(16px,2vw,24px)">
+              <div style={{
+                fontSize: "10px", fontWeight: 500, letterSpacing: "0.09em",
+                color: "rgba(245,245,247,0.2)", textTransform: "uppercase",
+                fontFamily: "SF Pro Text,-apple-system,sans-serif", marginBottom: "16px",
+              }}>Tech Stack</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
+                {SKILLS.map((s, i) => (
+                  <div key={s.cat} style={{
+                    opacity: mounted ? 1 : 0,
+                    transform: mounted ? "translateX(0)" : "translateX(-10px)",
+                    transition: `all 0.55s ease ${350 + i * 55}ms`,
+                  }}>
+                    <div style={{
+                      fontSize: "9.5px", fontWeight: 500, letterSpacing: "0.09em",
+                      color: "rgba(245,245,247,0.2)", textTransform: "uppercase",
+                      fontFamily: "SF Pro Text,-apple-system,sans-serif", marginBottom: "7px",
+                    }}>{s.cat}</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+                      {s.items.map(item => (
+                        <span key={item}
+                          style={{
+                            fontSize: "clamp(10.5px,1vw,12px)",
+                            fontFamily: "SF Pro Text,-apple-system,sans-serif",
+                            fontWeight: 400, color: "rgba(245,245,247,0.44)",
+                            background: "rgba(255,255,255,0.055)",
+                            border: "0.5px solid rgba(255,255,255,0.09)",
+                            borderRadius: "8px", padding: "4px 10px",
+                            transition: "all 0.18s ease", cursor: "default",
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.color = "rgba(245,245,247,0.9)"; e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.22)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = "rgba(245,245,247,0.44)"; e.currentTarget.style.background = "rgba(255,255,255,0.055)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
+                        >{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Widget>
+          </div>
+        </div>
+
+        {/* ═══ RIGHT: tab + scrollable content ════════════════════ */}
+        <div style={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          flexDirection: "column",
+          gap: "clamp(10px, 1.2vw, 14px)",
+          height: "100%",
+          overflow: "hidden",
+        }}>
+
+          {/* Segmented tab switcher */}
+          <div style={{
+            flexShrink: 0,
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? "translateY(0)" : "translateY(-10px)",
+            transition: "opacity 0.7s ease 160ms, transform 0.7s ease 160ms",
+          }}>
+            <Widget pad="5px" style={{ display: "inline-flex", width: "100%" }}>
+              <div style={{ display: "flex", gap: "4px", width: "100%" }}>
+                {["experience", "projects"].map(t => (
+                  <button key={t} onClick={() => setTab(t)} style={{
+                    flex: 1, padding: "11px 0",
+                    borderRadius: "16px", border: "none", cursor: "pointer",
+                    fontSize: "clamp(12.5px,1.2vw,14px)",
+                    fontWeight: tab === t ? 600 : 400,
+                    letterSpacing: "-0.01em",
+                    fontFamily: "SF Pro Text,-apple-system,Helvetica Neue,sans-serif",
+                    transition: "all 0.28s cubic-bezier(0.4,0,0.2,1)",
+                    background: tab === t
+                      ? "linear-gradient(145deg,rgba(62,62,70,0.99) 0%,rgba(48,48,56,0.99) 100%)"
+                      : "transparent",
+                    color: tab === t ? "#f5f5f7" : "rgba(245,245,247,0.3)",
+                    boxShadow: tab === t
+                      ? "inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.45), 0 2px 10px rgba(0,0,0,0.35)"
+                      : "none",
+                  }}>{t[0].toUpperCase() + t.slice(1)}</button>
+                ))}
+              </div>
+            </Widget>
+          </div>
+
+          {/* Scrollable card container — THIS is the only scrolling region */}
+          <div style={{
+            flex: 1,
+            minHeight: 0,
+            opacity: mounted ? 1 : 0,
+            transition: "opacity 0.7s ease 240ms",
+          }}>
+            <Widget style={{ height: "100%", display: "flex", flexDirection: "column" }} pad="0">
+              {/* List header */}
+              <div style={{
+                padding: "14px 22px 10px",
+                fontSize: "9.5px", fontWeight: 500, letterSpacing: "0.09em",
+                color: "rgba(245,245,247,0.2)", textTransform: "uppercase",
+                fontFamily: "SF Pro Text,-apple-system,sans-serif",
+                borderBottom: "0.5px solid rgba(255,255,255,0.055)",
+                flexShrink: 0,
+              }}>
+                {tab === "experience"
+                  ? `Work History · ${EXPERIENCES.length} positions`
+                  : `Projects · ${PROJECTS.length} built`}
+              </div>
+
+              {/* INNER SCROLL — only this div scrolls */}
+              <div
+                key={tab}
+                style={{
+                  flex: 1,
+                  overflowY: "auto",
+                  overflowX: "hidden",
+                  animation: "tabSlide 0.32s ease",
+                }}
+              >
+                {tab === "experience" && EXPERIENCES.map((exp, i) => (
+                  <ExpRow key={exp.id} exp={exp} isLast={i === EXPERIENCES.length - 1} />
+                ))}
+                {tab === "projects" && PROJECTS.map((proj, i) => (
+                  <ProjTile key={proj.id + proj.name} project={proj} isLast={i === PROJECTS.length - 1} />
+                ))}
+              </div>
+            </Widget>
+          </div>
+
+          {/* Footer pinned at bottom of right col */}
+          <div style={{
+            flexShrink: 0,
+            opacity: mounted ? 1 : 0,
+            transition: "opacity 1s ease 0.9s",
+            display: "flex", justifyContent: "space-between",
+            padding: "0 4px",
+          }}>
+            <span style={{ fontSize: "10.5px", color: "rgba(245,245,247,0.16)", fontFamily: "SF Pro Text,-apple-system,sans-serif", letterSpacing: "0.01em" }}>
+              Jal Patel · 2025
+            </span>
+            <span style={{ fontSize: "10.5px", color: "rgba(245,245,247,0.16)", fontFamily: "SF Pro Text,-apple-system,sans-serif" }}>
+              Flexible across all time-zones
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
