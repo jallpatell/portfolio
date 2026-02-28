@@ -14,7 +14,7 @@ export function Identity() {
       </p>
 
       <p className="font-sans text-[17px] md:text-sm leading-relaxed text-white/50 font-light tracking-tight">
-        I build web applications with a backend edge, building scalable apps with Node, TypeScript, React, Next.js,sometimes with Golang backed by solid APIs and zest to write complex frontend swiftly. I create intuitive and efficient digital experiences. When I'm not coding, you can find me stargazing or playing chess. I also fafo on L2 DeFi & dApps.
+        I build web applications with Node, TypeScript, React, Next.js, sometimes with Golang backed by solid APIs and zest to write complex frontend swiftly. I create intuitive and efficient digital experiences. When I'm not coding, you can find me stargazing or playing chess. I also fafo on L2 DeFi & dApps.
       </p>
     </Widget>
   );
