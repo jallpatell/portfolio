@@ -32,6 +32,14 @@ export const EXPERIENCES = [
 
 export const PROJECTS = [
   {
+    id: 0, 
+    name: "Hyperchain", 
+    tagline: "Build AI Powered Workflow Automations",
+    description: "Built end-to-end workflow automation platform(similar to n8n Zapier) with drag & drop node-executors implemented using a custom DAG engine.",
+    stack: ["TypeScript", "Postgres", "Zod", "React.js", "tanstack-query"],
+    link: "https://app.onrender.com/"
+  },
+  {
     id: 1, 
     name: "MetaGas", 
     tagline: "Live Gas Tracker",
