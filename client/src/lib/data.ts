@@ -71,14 +71,6 @@ export const PROJECTS = [
     stack: ["TypeScript", "React", "@solana/web3.js"],
     link: "https://cryptexne.vercel.app/"
   },
-  {
-    id: 5, 
-    name: "product-recco", 
-    tagline: "AI Advisor",
-    description: "Cross-platform AI product advisor powered by Gemini NLP with state management, RESTful API integrations, and local persistence.",
-    stack: ["React Native", "Gemini API", "AsyncStorage"],
-    link: "https://snack.expo.dev/@jallpatell/product-recco"
-  },
 ];
 
 export const SKILLS = [
