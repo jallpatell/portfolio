@@ -37,7 +37,7 @@ export const PROJECTS = [
     tagline: "Build AI Powered Workflow Automations",
     description: "Built end-to-end workflow automation platform(similar to n8n Zapier) with drag & drop node-executors implemented using a custom DAG engine.",
     stack: ["TypeScript", "Postgres", "Zod", "React.js", "tanstack-query"],
-    link: "https://app.onrender.com/"
+    link: "https://hyperchain.onrender.com/"
   },
   {
     id: 1, 
