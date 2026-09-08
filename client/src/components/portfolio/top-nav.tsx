@@ -46,19 +46,24 @@ export function TopNav() {
 
   const isDark = theme === "dark";
 
-  const navBg = scrolled
-    ? isDark
-      ? "bg-[#0D0D0D]/95 backdrop-blur-md border-b border-[#2A2A2A] shadow-[0_1px_0_rgba(255,255,255,0.03)]"
-      : "bg-[#FAF9F6]/95 backdrop-blur-md border-b border-[#DEDEDE] shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-    : "backdrop-blur-sm border-b border-transparent";
+  const navStyle: React.CSSProperties = scrolled
+    ? {
+        background: "color-mix(in srgb, var(--bg-card) 85%, transparent)",
+        borderColor: "var(--border)",
+        boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)",
+      }
+    : {
+        background: "transparent",
+        borderColor: "transparent",
+      };
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
-        style={{ backgroundColor: scrolled ? undefined : "var(--bg-page)" }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <div className="fixed top-4 sm:top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+        <nav
+          className="pointer-events-auto transition-all duration-300 w-full max-w-5xl rounded-[14px] flex items-center justify-between px-4 sm:px-5 h-14 backdrop-blur-md border"
+          style={navStyle}
+        >
 
           {/* Left — initials mark + wordmark */}
           <a
@@ -135,14 +140,14 @@ export function TopNav() {
               {menuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="fixed top-14 left-0 right-0 z-40 backdrop-blur-md border-b md:hidden"
-          style={{ backgroundColor: "var(--bg-page)", borderColor: "var(--border)" }}
+          className="fixed top-24 left-4 right-4 z-40 backdrop-blur-md border rounded-[12px] md:hidden shadow-lg overflow-hidden"
+          style={{ background: "color-mix(in srgb, var(--bg-card) 95%, transparent)", borderColor: "var(--border)" }}
         >
           <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
             {NAV_LINKS.map(({ label, href }) => (
