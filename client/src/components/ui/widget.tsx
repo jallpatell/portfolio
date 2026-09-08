@@ -3,6 +3,7 @@ import { motion, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface WidgetProps extends HTMLMotionProps<"div"> {
+  children?: React.ReactNode;
   padding?: string;
 }
 

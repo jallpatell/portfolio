@@ -87,7 +87,7 @@ If you need environment variables:
 
 1. **Local Development**: Create `.env.local`
    ```
-   VITE_API_URL=http://localhost:5000
+   VITE_API_URL=http://localhost:3000
    ```
 
 2. **Vercel Dashboard**: 

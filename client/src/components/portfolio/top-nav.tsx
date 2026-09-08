@@ -1,77 +1,164 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Calendar, Check } from "lucide-react";
-import { EMAIL } from "@/lib/data";
+import { useState, useEffect } from "react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/lib/theme";
 
-interface TopNavProps {
-  mounted: boolean;
-}
+const NAV_LINKS = [
+  { label: "About",      href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects",   href: "#projects" },
+  { label: "Skills",     href: "#skills" },
+  { label: "Contact",    href: "#contact" },
+];
 
-export function TopNav({ mounted }: TopNavProps) {
-  const [copied, setCopied] = useState(false);
-  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
+export function TopNav() {
+  const [scrolled, setScrolled]       = useState(false);
+  const [menuOpen, setMenuOpen]       = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const { theme, toggleTheme }        = useTheme();
 
-  const links = [
-    { key: "github", label: "GitHub", href: "https://github.com/jallpatell", icon: Github },
-    { key: "linkedin", label: "LinkedIn", href: "https://linkedin.com/in/jallpatell", icon: Linkedin },
-    { key: "email", label: "Email", href: null, icon: copied ? Check : Mail },
-    { key: "calendly", label: "Calendly", href: "https://calendly.com/jallpatellco", icon: Calendar },
-  ];
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const handleAction = async (key: string, href: string | null) => {
-    if (key === "email") {
-      try {
-        await navigator.clipboard.writeText(EMAIL);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2200);
-      } catch (err) {
-        console.error("Failed to copy", err);
-      }
-      return;
-    }
-    if (href) {
-      window.open(href, "_blank", "noopener,noreferrer");
-    }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    NAV_LINKS.forEach(({ href }) => {
+      const el = document.querySelector(href);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMenuOpen(false);
   };
 
+  const isDark = theme === "dark";
+
+  const navBg = scrolled
+    ? isDark
+      ? "bg-[#0D0D0D]/95 backdrop-blur-md border-b border-[#2A2A2A] shadow-[0_1px_0_rgba(255,255,255,0.03)]"
+      : "bg-[#FAF9F6]/95 backdrop-blur-md border-b border-[#DEDEDE] shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+    : "backdrop-blur-sm border-b border-transparent";
+
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: -100 }}
-      animate={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: -100 }}
-      transition={{ duration: 0.7, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 pointer-events-none"
-    >
-      <div className="pointer-events-auto inline-flex items-center gap-1 bg-gradient-to-b from-[#1c1c22]/95 to-[#121218]/95 border border-white/10 rounded-2xl p-1.5 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.07),inset_0_-1px_0_rgba(0,0,0,0.4),0_4px_24px_rgba(0,0,0,0.7)]">
-        {links.map((link) => {
-          const isHovered = hoveredKey === link.key;
-          const isCopied = link.key === "email" && copied;
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
+        style={{ backgroundColor: scrolled ? undefined : "var(--bg-page)" }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
 
-          return (
-            <div key={link.key} className="relative">
-              <button
-                onClick={() => handleAction(link.key, link.href)}
-                onMouseEnter={() => setHoveredKey(link.key)}
-                onMouseLeave={() => setHoveredKey(null)}
-                className={`
-                  flex items-center gap-2 px-3.5 py-2 rounded-[11px] text-[13px] font-medium tracking-tight transition-all duration-200
-                  ${isHovered ? 'bg-white/10 text-[#f5f5f7]' : 'bg-transparent text-[#f5f5f7]/60'}
-                  ${isCopied ? '!text-[#30d158]' : ''}
-                `}
+          {/* Left — initials mark + wordmark */}
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            className="flex items-center gap-2.5 group"
+          >
+            <div
+              className="w-7 h-7 rounded-[8px] flex items-center justify-center flex-shrink-0 transition-colors duration-250"
+              style={{ background: "var(--ink)" }}
+            >
+              <span
+                style={{ fontFamily: "var(--font-mono)", color: "var(--bg-page)", fontSize: "0.6rem" }}
+                className="font-medium tracking-wider"
               >
-                <link.icon className="w-3.5 h-3.5 opacity-70" />
-                <span className="hidden sm:inline-block">{link.label}</span>
-              </button>
-
-              {isHovered && (
-                <div className="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 bg-[#121218]/98 border border-white/10 rounded-xl px-3 py-1.5 text-[11px] text-[#f5f5f7]/70 whitespace-nowrap shadow-2xl z-50 animate-tipIn pointer-events-none">
-                  {isCopied ? "Copied!" : link.key === "email" ? EMAIL : (link.href || "").replace("https://", "")}
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#121218]/98 border-t border-l border-white/10 rotate-45" />
-                </div>
-              )}
+                JP
+              </span>
             </div>
-          );
-        })}
-      </div>
-    </motion.div>
+            <span
+              style={{ fontFamily: "var(--font-mono)", color: "var(--ink)", fontSize: "0.8125rem" }}
+              className="tracking-tight font-medium hidden sm:block"
+            >
+              jal.patel
+            </span>
+          </a>
+
+          {/* Center — nav links */}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                onClick={(e) => handleNav(e, href)}
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  color: activeSection === href.slice(1) ? "var(--ink)" : "var(--ink-4)",
+                  fontSize: "0.75rem",
+                }}
+                className="px-3 py-1.5 rounded-md tracking-wide transition-colors duration-150 hover:text-[var(--ink)]"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right — theme toggle + mobile menu */}
+          <div className="flex items-center gap-2">
+            {/* Theme toggle pill */}
+            <button
+              onClick={toggleTheme}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all duration-200"
+              style={{
+                background: "var(--bg-card)",
+                borderColor: "var(--border-2)",
+                color: "var(--ink-3)",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.6875rem",
+              }}
+            >
+              {isDark
+                ? <><Sun className="w-3 h-3" /><span className="hidden sm:inline">Light</span></>
+                : <><Moon className="w-3 h-3" /><span className="hidden sm:inline">Dark</span></>
+              }
+            </button>
+
+            {/* Mobile hamburger */}
+            <button
+              className="md:hidden p-1.5 rounded-md transition-colors"
+              style={{ color: "var(--ink-3)" }}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div
+          className="fixed top-14 left-0 right-0 z-40 backdrop-blur-md border-b md:hidden"
+          style={{ backgroundColor: "var(--bg-page)", borderColor: "var(--border)" }}
+        >
+          <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
+            {NAV_LINKS.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                onClick={(e) => handleNav(e, href)}
+                style={{ fontFamily: "var(--font-mono)", color: "var(--ink-3)", fontSize: "0.8125rem" }}
+                className="px-3 py-2.5 rounded-md tracking-wide transition-colors hover:text-[var(--ink)]"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
